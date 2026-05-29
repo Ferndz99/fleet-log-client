@@ -15,6 +15,7 @@ import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
 import { Route as DemoTableRouteImport } from './routes/demo/table'
+import { Route as AuthenticatedVehiclesRouteImport } from './routes/_authenticated/vehicles'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -45,17 +46,24 @@ const DemoTableRoute = DemoTableRouteImport.update({
   path: '/demo/table',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedVehiclesRoute = AuthenticatedVehiclesRouteImport.update({
+  id: '/vehicles',
+  path: '/vehicles',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedIndexRoute
   '/about': typeof AboutRoute
   '/login': typeof LoginRoute
+  '/vehicles': typeof AuthenticatedVehiclesRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
 }
 export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/login': typeof LoginRoute
+  '/vehicles': typeof AuthenticatedVehiclesRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/': typeof AuthenticatedIndexRoute
@@ -65,20 +73,34 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/about': typeof AboutRoute
   '/login': typeof LoginRoute
+  '/_authenticated/vehicles': typeof AuthenticatedVehiclesRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/login' | '/demo/table' | '/demo/tanstack-query'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/login'
+    | '/vehicles'
+    | '/demo/table'
+    | '/demo/tanstack-query'
   fileRoutesByTo: FileRoutesByTo
-  to: '/about' | '/login' | '/demo/table' | '/demo/tanstack-query' | '/'
+  to:
+    | '/about'
+    | '/login'
+    | '/vehicles'
+    | '/demo/table'
+    | '/demo/tanstack-query'
+    | '/'
   id:
     | '__root__'
     | '/_authenticated'
     | '/about'
     | '/login'
+    | '/_authenticated/vehicles'
     | '/demo/table'
     | '/demo/tanstack-query'
     | '/_authenticated/'
@@ -136,14 +158,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemoTableRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/vehicles': {
+      id: '/_authenticated/vehicles'
+      path: '/vehicles'
+      fullPath: '/vehicles'
+      preLoaderRoute: typeof AuthenticatedVehiclesRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
 interface AuthenticatedRouteChildren {
+  AuthenticatedVehiclesRoute: typeof AuthenticatedVehiclesRoute
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedVehiclesRoute: AuthenticatedVehiclesRoute,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
 }
 
