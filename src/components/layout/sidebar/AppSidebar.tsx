@@ -52,7 +52,7 @@ const data = {
 			items: [
 				{
 					title: "Vehiculos",
-					url: "#",
+					url: "/vehicles",
 				},
 				{
 					title: "Mantenimiento",
