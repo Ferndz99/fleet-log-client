@@ -13,9 +13,11 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as LogsSearchVehicleRouteImport } from './routes/logs/search-vehicle'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
 import { Route as DemoTableRouteImport } from './routes/demo/table'
 import { Route as AuthenticatedVehiclesIndexRouteImport } from './routes/_authenticated/vehicles/index'
+import { Route as LogsCreateVehiclesIdRouteImport } from './routes/logs/create/$vehiclesId'
 import { Route as AuthenticatedVehiclesVehiclesIdRouteImport } from './routes/_authenticated/vehicles/$vehiclesId'
 import { Route as AuthenticatedVehiclesVehiclesIdLogLogIdRouteImport } from './routes/_authenticated/vehicles/$vehiclesId/log/$logId'
 
@@ -38,6 +40,11 @@ const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const LogsSearchVehicleRoute = LogsSearchVehicleRouteImport.update({
+  id: '/logs/search-vehicle',
+  path: '/logs/search-vehicle',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
   id: '/demo/tanstack-query',
   path: '/demo/tanstack-query',
@@ -54,6 +61,11 @@ const AuthenticatedVehiclesIndexRoute =
     path: '/vehicles/',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
+const LogsCreateVehiclesIdRoute = LogsCreateVehiclesIdRouteImport.update({
+  id: '/logs/create/$vehiclesId',
+  path: '/logs/create/$vehiclesId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedVehiclesVehiclesIdRoute =
   AuthenticatedVehiclesVehiclesIdRouteImport.update({
     id: '/vehicles/$vehiclesId',
@@ -73,7 +85,9 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/logs/search-vehicle': typeof LogsSearchVehicleRoute
   '/vehicles/$vehiclesId': typeof AuthenticatedVehiclesVehiclesIdRouteWithChildren
+  '/logs/create/$vehiclesId': typeof LogsCreateVehiclesIdRoute
   '/vehicles/': typeof AuthenticatedVehiclesIndexRoute
   '/vehicles/$vehiclesId/log/$logId': typeof AuthenticatedVehiclesVehiclesIdLogLogIdRoute
 }
@@ -82,8 +96,10 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/logs/search-vehicle': typeof LogsSearchVehicleRoute
   '/': typeof AuthenticatedIndexRoute
   '/vehicles/$vehiclesId': typeof AuthenticatedVehiclesVehiclesIdRouteWithChildren
+  '/logs/create/$vehiclesId': typeof LogsCreateVehiclesIdRoute
   '/vehicles': typeof AuthenticatedVehiclesIndexRoute
   '/vehicles/$vehiclesId/log/$logId': typeof AuthenticatedVehiclesVehiclesIdLogLogIdRoute
 }
@@ -94,8 +110,10 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/logs/search-vehicle': typeof LogsSearchVehicleRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
   '/_authenticated/vehicles/$vehiclesId': typeof AuthenticatedVehiclesVehiclesIdRouteWithChildren
+  '/logs/create/$vehiclesId': typeof LogsCreateVehiclesIdRoute
   '/_authenticated/vehicles/': typeof AuthenticatedVehiclesIndexRoute
   '/_authenticated/vehicles/$vehiclesId/log/$logId': typeof AuthenticatedVehiclesVehiclesIdLogLogIdRoute
 }
@@ -107,7 +125,9 @@ export interface FileRouteTypes {
     | '/login'
     | '/demo/table'
     | '/demo/tanstack-query'
+    | '/logs/search-vehicle'
     | '/vehicles/$vehiclesId'
+    | '/logs/create/$vehiclesId'
     | '/vehicles/'
     | '/vehicles/$vehiclesId/log/$logId'
   fileRoutesByTo: FileRoutesByTo
@@ -116,8 +136,10 @@ export interface FileRouteTypes {
     | '/login'
     | '/demo/table'
     | '/demo/tanstack-query'
+    | '/logs/search-vehicle'
     | '/'
     | '/vehicles/$vehiclesId'
+    | '/logs/create/$vehiclesId'
     | '/vehicles'
     | '/vehicles/$vehiclesId/log/$logId'
   id:
@@ -127,8 +149,10 @@ export interface FileRouteTypes {
     | '/login'
     | '/demo/table'
     | '/demo/tanstack-query'
+    | '/logs/search-vehicle'
     | '/_authenticated/'
     | '/_authenticated/vehicles/$vehiclesId'
+    | '/logs/create/$vehiclesId'
     | '/_authenticated/vehicles/'
     | '/_authenticated/vehicles/$vehiclesId/log/$logId'
   fileRoutesById: FileRoutesById
@@ -139,6 +163,8 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   DemoTableRoute: typeof DemoTableRoute
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
+  LogsSearchVehicleRoute: typeof LogsSearchVehicleRoute
+  LogsCreateVehiclesIdRoute: typeof LogsCreateVehiclesIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -171,6 +197,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedIndexRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/logs/search-vehicle': {
+      id: '/logs/search-vehicle'
+      path: '/logs/search-vehicle'
+      fullPath: '/logs/search-vehicle'
+      preLoaderRoute: typeof LogsSearchVehicleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/demo/tanstack-query': {
       id: '/demo/tanstack-query'
       path: '/demo/tanstack-query'
@@ -191,6 +224,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/vehicles/'
       preLoaderRoute: typeof AuthenticatedVehiclesIndexRouteImport
       parentRoute: typeof AuthenticatedRoute
+    }
+    '/logs/create/$vehiclesId': {
+      id: '/logs/create/$vehiclesId'
+      path: '/logs/create/$vehiclesId'
+      fullPath: '/logs/create/$vehiclesId'
+      preLoaderRoute: typeof LogsCreateVehiclesIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_authenticated/vehicles/$vehiclesId': {
       id: '/_authenticated/vehicles/$vehiclesId'
@@ -247,6 +287,8 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   DemoTableRoute: DemoTableRoute,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
+  LogsSearchVehicleRoute: LogsSearchVehicleRoute,
+  LogsCreateVehiclesIdRoute: LogsCreateVehiclesIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
