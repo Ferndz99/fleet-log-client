@@ -22,7 +22,7 @@ import { Eye } from "lucide-react";
 import { useState } from "react";
 
 export const Route = createFileRoute(
-	"/_authenticated/vehicles/$vehiclesId/log/$logId",
+	"/_authenticated/_dashboard/vehicles/$vehiclesId/log/$logId",
 )({
 	component: RouteComponent,
 });

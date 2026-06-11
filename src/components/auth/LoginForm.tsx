@@ -4,8 +4,6 @@ import { Controller, useForm } from "react-hook-form";
 import {
 	Card,
 	CardContent,
-	CardDescription,
-	CardFooter,
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
@@ -16,22 +14,25 @@ import {
 	FieldGroup,
 	FieldLabel,
 } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
 import {
 	InputGroup,
 	InputGroupAddon,
 	InputGroupInput,
-	InputGroupText,
-	InputGroupTextarea,
 } from "@/components/ui/input-group";
 import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
-import { Eye, EyeOff, SearchIcon, UserRound } from "lucide-react";
+import { Eye, EyeOff, Loader2, UserRound } from "lucide-react";
 import { useState } from "react";
+import { useAuth } from "#/features/auth/context/auth-context";
+import { handleApiErrors } from "#/lib/handle-api-errors";
+import { cn } from "#/lib/utils";
 
 const formSchema = z.object({
-	email: z.email(),
-	password: z.string(),
+	email: z.email("Formato de email invalido").min(1, "El email es requerido"),
+	password: z
+		.string()
+		.min(1, "La contraseña es requerida")
+		.min(8, "La contraseña debe tener al menos 8 caracteres"),
 });
 
 function LoginForm() {
@@ -45,12 +46,18 @@ function LoginForm() {
 
 	const [showPassword, setShowPassword] = useState(false);
 
-	function onSubmit(data: z.infer<typeof formSchema>) {
-		console.log(data);
+	const { login } = useAuth();
+
+	async function onSubmit(data: z.infer<typeof formSchema>) {
+		try {
+			await login(data.email, data.password);
+		} catch (error) {
+			handleApiErrors(error, form);
+		}
 	}
 
 	return (
-		<Card className="w-full sm:max-w-sm mx-auto">
+		<Card className={cn("w-full sm:max-w-sm mx-auto", form.formState.errors.root && "border border-destructive/50 rounded-md")}>
 			<CardHeader>
 				<CardTitle className="mx-auto text-3xl">Login</CardTitle>
 			</CardHeader>
@@ -74,9 +81,11 @@ function LoginForm() {
 											aria-invalid={fieldState.invalid}
 											placeholder="worker1@example.com"
 											autoComplete="off"
+											autoCapitalize="off"
+											type="email"
 										/>
 										<InputGroupAddon align="inline-end">
-											<UserRound className="cursor-default"/>
+											<UserRound className="cursor-default" />
 										</InputGroupAddon>
 									</InputGroup>
 									{/* <Input
@@ -211,20 +220,32 @@ function LoginForm() {
 							)}
 						/>
 						<Field>
+							{form.formState.errors.root && (
+								<p className="text-sm text-destructive text-center">
+									{form.formState.errors.root.message}
+								</p>
+							)}
 							<Button
 								className="cursor-pointer p-4.5"
 								type="submit"
-								form="form-login"
-								
+								disabled={form.formState.isSubmitting}
+
 							>
-								Login
+								{form.formState.isSubmitting ? (
+									<>
+										<Loader2 className="animate-spin w-4 h-4" />
+										Iniciando sesión...
+									</>
+								) : (
+									"Iniciar sesión"
+								)}
 							</Button>
 							{/* <Button variant="outline" type="button">
 								Login with Google
 							</Button> */}
-							<FieldDescription className="text-center">
+							{/* <FieldDescription className="text-center">
 								Don't have an account? <Link to="/">Sign up</Link>
-							</FieldDescription>
+							</FieldDescription> */}
 						</Field>
 					</FieldGroup>
 				</form>

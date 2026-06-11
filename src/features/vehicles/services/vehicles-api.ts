@@ -1,3 +1,4 @@
+import axiosInstance from "#/lib/axios";
 import type {
 	LogDetail,
 	PaginatedResponse,
@@ -20,20 +21,27 @@ export async function fetchVehicles(
 }
 
 export async function fetchVehicle(vehicleId: number): Promise<VehicleDetail> {
-	const res = await fetch(
-		`http://127.0.0.1:8000/api/v1/vehicles/${vehicleId}/`,
-	);
-	if (!res.ok) throw new Error("Error");
-	return res.json();
+	const { data } = await axiosInstance.get(`api/v1/vehicles/${vehicleId}/`);
+	// const res = await fetch(
+	// 	`http://127.0.0.1:8000/api/v1/vehicles/${vehicleId}/`,
+	// );
+	// if (!res.ok) throw new Error("Error");
+	// return res.json();
+	return data;
 }
 
 export async function fetchVehicleLog(
 	vehicleId: number,
 	logId: number,
 ): Promise<LogDetail> {
-	const res = await fetch(
-		`http://127.0.0.1:8000/api/v1/vehicles/${vehicleId}/logs/${logId}`,
+	const { data } = await axiosInstance.get(
+		`api/v1/vehicles/${vehicleId}/logs/${logId}`,
 	);
-	if (!res.ok) throw new Error("Error");
-	return res.json();
+	return data;
+
+	// const res = await fetch(
+	// 	`http://127.0.0.1:8000/api/v1/vehicles/${vehicleId}/logs/${logId}`,
+	// );
+	// if (!res.ok) throw new Error("Error");
+	// return res.json();
 }

@@ -12,12 +12,15 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
-import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
 import { Route as DemoTableRouteImport } from './routes/demo/table'
-import { Route as AuthenticatedVehiclesIndexRouteImport } from './routes/_authenticated/vehicles/index'
-import { Route as AuthenticatedVehiclesVehiclesIdRouteImport } from './routes/_authenticated/vehicles/$vehiclesId'
-import { Route as AuthenticatedVehiclesVehiclesIdLogLogIdRouteImport } from './routes/_authenticated/vehicles/$vehiclesId/log/$logId'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/_dashboard'
+import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/_dashboard/index'
+import { Route as AuthenticatedLogsSearchVehicleRouteImport } from './routes/_authenticated/logs/search-vehicle'
+import { Route as AuthenticatedDashboardVehiclesIndexRouteImport } from './routes/_authenticated/_dashboard/vehicles/index'
+import { Route as AuthenticatedLogsCreateVehiclesIdRouteImport } from './routes/_authenticated/logs/create/$vehiclesId'
+import { Route as AuthenticatedDashboardVehiclesVehiclesIdRouteImport } from './routes/_authenticated/_dashboard/vehicles/$vehiclesId'
+import { Route as AuthenticatedDashboardVehiclesVehiclesIdLogLogIdRouteImport } from './routes/_authenticated/_dashboard/vehicles/$vehiclesId/log/$logId'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -33,11 +36,6 @@ const AuthenticatedRoute = AuthenticatedRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
 const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
   id: '/demo/tanstack-query',
   path: '/demo/tanstack-query',
@@ -48,56 +46,85 @@ const DemoTableRoute = DemoTableRouteImport.update({
   path: '/demo/table',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedVehiclesIndexRoute =
-  AuthenticatedVehiclesIndexRouteImport.update({
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/_dashboard',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedDashboardIndexRoute =
+  AuthenticatedDashboardIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedLogsSearchVehicleRoute =
+  AuthenticatedLogsSearchVehicleRouteImport.update({
+    id: '/logs/search-vehicle',
+    path: '/logs/search-vehicle',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedDashboardVehiclesIndexRoute =
+  AuthenticatedDashboardVehiclesIndexRouteImport.update({
     id: '/vehicles/',
     path: '/vehicles/',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedLogsCreateVehiclesIdRoute =
+  AuthenticatedLogsCreateVehiclesIdRouteImport.update({
+    id: '/logs/create/$vehiclesId',
+    path: '/logs/create/$vehiclesId',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
-const AuthenticatedVehiclesVehiclesIdRoute =
-  AuthenticatedVehiclesVehiclesIdRouteImport.update({
+const AuthenticatedDashboardVehiclesVehiclesIdRoute =
+  AuthenticatedDashboardVehiclesVehiclesIdRouteImport.update({
     id: '/vehicles/$vehiclesId',
     path: '/vehicles/$vehiclesId',
-    getParentRoute: () => AuthenticatedRoute,
+    getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
-const AuthenticatedVehiclesVehiclesIdLogLogIdRoute =
-  AuthenticatedVehiclesVehiclesIdLogLogIdRouteImport.update({
+const AuthenticatedDashboardVehiclesVehiclesIdLogLogIdRoute =
+  AuthenticatedDashboardVehiclesVehiclesIdLogLogIdRouteImport.update({
     id: '/log/$logId',
     path: '/log/$logId',
-    getParentRoute: () => AuthenticatedVehiclesVehiclesIdRoute,
+    getParentRoute: () => AuthenticatedDashboardVehiclesVehiclesIdRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof AuthenticatedIndexRoute
+  '/': typeof AuthenticatedDashboardIndexRoute
   '/about': typeof AboutRoute
   '/login': typeof LoginRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
-  '/vehicles/$vehiclesId': typeof AuthenticatedVehiclesVehiclesIdRouteWithChildren
-  '/vehicles/': typeof AuthenticatedVehiclesIndexRoute
-  '/vehicles/$vehiclesId/log/$logId': typeof AuthenticatedVehiclesVehiclesIdLogLogIdRoute
+  '/logs/search-vehicle': typeof AuthenticatedLogsSearchVehicleRoute
+  '/vehicles/$vehiclesId': typeof AuthenticatedDashboardVehiclesVehiclesIdRouteWithChildren
+  '/logs/create/$vehiclesId': typeof AuthenticatedLogsCreateVehiclesIdRoute
+  '/vehicles/': typeof AuthenticatedDashboardVehiclesIndexRoute
+  '/vehicles/$vehiclesId/log/$logId': typeof AuthenticatedDashboardVehiclesVehiclesIdLogLogIdRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof AuthenticatedDashboardIndexRoute
   '/about': typeof AboutRoute
   '/login': typeof LoginRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
-  '/': typeof AuthenticatedIndexRoute
-  '/vehicles/$vehiclesId': typeof AuthenticatedVehiclesVehiclesIdRouteWithChildren
-  '/vehicles': typeof AuthenticatedVehiclesIndexRoute
-  '/vehicles/$vehiclesId/log/$logId': typeof AuthenticatedVehiclesVehiclesIdLogLogIdRoute
+  '/logs/search-vehicle': typeof AuthenticatedLogsSearchVehicleRoute
+  '/vehicles/$vehiclesId': typeof AuthenticatedDashboardVehiclesVehiclesIdRouteWithChildren
+  '/logs/create/$vehiclesId': typeof AuthenticatedLogsCreateVehiclesIdRoute
+  '/vehicles': typeof AuthenticatedDashboardVehiclesIndexRoute
+  '/vehicles/$vehiclesId/log/$logId': typeof AuthenticatedDashboardVehiclesVehiclesIdLogLogIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/about': typeof AboutRoute
   '/login': typeof LoginRoute
+  '/_authenticated/_dashboard': typeof AuthenticatedDashboardRouteWithChildren
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
-  '/_authenticated/': typeof AuthenticatedIndexRoute
-  '/_authenticated/vehicles/$vehiclesId': typeof AuthenticatedVehiclesVehiclesIdRouteWithChildren
-  '/_authenticated/vehicles/': typeof AuthenticatedVehiclesIndexRoute
-  '/_authenticated/vehicles/$vehiclesId/log/$logId': typeof AuthenticatedVehiclesVehiclesIdLogLogIdRoute
+  '/_authenticated/logs/search-vehicle': typeof AuthenticatedLogsSearchVehicleRoute
+  '/_authenticated/_dashboard/': typeof AuthenticatedDashboardIndexRoute
+  '/_authenticated/_dashboard/vehicles/$vehiclesId': typeof AuthenticatedDashboardVehiclesVehiclesIdRouteWithChildren
+  '/_authenticated/logs/create/$vehiclesId': typeof AuthenticatedLogsCreateVehiclesIdRoute
+  '/_authenticated/_dashboard/vehicles/': typeof AuthenticatedDashboardVehiclesIndexRoute
+  '/_authenticated/_dashboard/vehicles/$vehiclesId/log/$logId': typeof AuthenticatedDashboardVehiclesVehiclesIdLogLogIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -107,17 +134,21 @@ export interface FileRouteTypes {
     | '/login'
     | '/demo/table'
     | '/demo/tanstack-query'
+    | '/logs/search-vehicle'
     | '/vehicles/$vehiclesId'
+    | '/logs/create/$vehiclesId'
     | '/vehicles/'
     | '/vehicles/$vehiclesId/log/$logId'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/'
     | '/about'
     | '/login'
     | '/demo/table'
     | '/demo/tanstack-query'
-    | '/'
+    | '/logs/search-vehicle'
     | '/vehicles/$vehiclesId'
+    | '/logs/create/$vehiclesId'
     | '/vehicles'
     | '/vehicles/$vehiclesId/log/$logId'
   id:
@@ -125,12 +156,15 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/about'
     | '/login'
+    | '/_authenticated/_dashboard'
     | '/demo/table'
     | '/demo/tanstack-query'
-    | '/_authenticated/'
-    | '/_authenticated/vehicles/$vehiclesId'
-    | '/_authenticated/vehicles/'
-    | '/_authenticated/vehicles/$vehiclesId/log/$logId'
+    | '/_authenticated/logs/search-vehicle'
+    | '/_authenticated/_dashboard/'
+    | '/_authenticated/_dashboard/vehicles/$vehiclesId'
+    | '/_authenticated/logs/create/$vehiclesId'
+    | '/_authenticated/_dashboard/vehicles/'
+    | '/_authenticated/_dashboard/vehicles/$vehiclesId/log/$logId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -164,13 +198,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/': {
-      id: '/_authenticated/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof AuthenticatedIndexRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
     '/demo/tanstack-query': {
       id: '/demo/tanstack-query'
       path: '/demo/tanstack-query'
@@ -185,56 +212,104 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemoTableRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/vehicles/': {
-      id: '/_authenticated/vehicles/'
+    '/_authenticated/_dashboard': {
+      id: '/_authenticated/_dashboard'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/_dashboard/': {
+      id: '/_authenticated/_dashboard/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedDashboardIndexRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/logs/search-vehicle': {
+      id: '/_authenticated/logs/search-vehicle'
+      path: '/logs/search-vehicle'
+      fullPath: '/logs/search-vehicle'
+      preLoaderRoute: typeof AuthenticatedLogsSearchVehicleRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/_dashboard/vehicles/': {
+      id: '/_authenticated/_dashboard/vehicles/'
       path: '/vehicles'
       fullPath: '/vehicles/'
-      preLoaderRoute: typeof AuthenticatedVehiclesIndexRouteImport
+      preLoaderRoute: typeof AuthenticatedDashboardVehiclesIndexRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/logs/create/$vehiclesId': {
+      id: '/_authenticated/logs/create/$vehiclesId'
+      path: '/logs/create/$vehiclesId'
+      fullPath: '/logs/create/$vehiclesId'
+      preLoaderRoute: typeof AuthenticatedLogsCreateVehiclesIdRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
-    '/_authenticated/vehicles/$vehiclesId': {
-      id: '/_authenticated/vehicles/$vehiclesId'
+    '/_authenticated/_dashboard/vehicles/$vehiclesId': {
+      id: '/_authenticated/_dashboard/vehicles/$vehiclesId'
       path: '/vehicles/$vehiclesId'
       fullPath: '/vehicles/$vehiclesId'
-      preLoaderRoute: typeof AuthenticatedVehiclesVehiclesIdRouteImport
-      parentRoute: typeof AuthenticatedRoute
+      preLoaderRoute: typeof AuthenticatedDashboardVehiclesVehiclesIdRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
     }
-    '/_authenticated/vehicles/$vehiclesId/log/$logId': {
-      id: '/_authenticated/vehicles/$vehiclesId/log/$logId'
+    '/_authenticated/_dashboard/vehicles/$vehiclesId/log/$logId': {
+      id: '/_authenticated/_dashboard/vehicles/$vehiclesId/log/$logId'
       path: '/log/$logId'
       fullPath: '/vehicles/$vehiclesId/log/$logId'
-      preLoaderRoute: typeof AuthenticatedVehiclesVehiclesIdLogLogIdRouteImport
-      parentRoute: typeof AuthenticatedVehiclesVehiclesIdRoute
+      preLoaderRoute: typeof AuthenticatedDashboardVehiclesVehiclesIdLogLogIdRouteImport
+      parentRoute: typeof AuthenticatedDashboardVehiclesVehiclesIdRoute
     }
   }
 }
 
-interface AuthenticatedVehiclesVehiclesIdRouteChildren {
-  AuthenticatedVehiclesVehiclesIdLogLogIdRoute: typeof AuthenticatedVehiclesVehiclesIdLogLogIdRoute
+interface AuthenticatedDashboardVehiclesVehiclesIdRouteChildren {
+  AuthenticatedDashboardVehiclesVehiclesIdLogLogIdRoute: typeof AuthenticatedDashboardVehiclesVehiclesIdLogLogIdRoute
 }
 
-const AuthenticatedVehiclesVehiclesIdRouteChildren: AuthenticatedVehiclesVehiclesIdRouteChildren =
+const AuthenticatedDashboardVehiclesVehiclesIdRouteChildren: AuthenticatedDashboardVehiclesVehiclesIdRouteChildren =
   {
-    AuthenticatedVehiclesVehiclesIdLogLogIdRoute:
-      AuthenticatedVehiclesVehiclesIdLogLogIdRoute,
+    AuthenticatedDashboardVehiclesVehiclesIdLogLogIdRoute:
+      AuthenticatedDashboardVehiclesVehiclesIdLogLogIdRoute,
   }
 
-const AuthenticatedVehiclesVehiclesIdRouteWithChildren =
-  AuthenticatedVehiclesVehiclesIdRoute._addFileChildren(
-    AuthenticatedVehiclesVehiclesIdRouteChildren,
+const AuthenticatedDashboardVehiclesVehiclesIdRouteWithChildren =
+  AuthenticatedDashboardVehiclesVehiclesIdRoute._addFileChildren(
+    AuthenticatedDashboardVehiclesVehiclesIdRouteChildren,
+  )
+
+interface AuthenticatedDashboardRouteChildren {
+  AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
+  AuthenticatedDashboardVehiclesVehiclesIdRoute: typeof AuthenticatedDashboardVehiclesVehiclesIdRouteWithChildren
+  AuthenticatedDashboardVehiclesIndexRoute: typeof AuthenticatedDashboardVehiclesIndexRoute
+}
+
+const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
+  {
+    AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
+    AuthenticatedDashboardVehiclesVehiclesIdRoute:
+      AuthenticatedDashboardVehiclesVehiclesIdRouteWithChildren,
+    AuthenticatedDashboardVehiclesIndexRoute:
+      AuthenticatedDashboardVehiclesIndexRoute,
+  }
+
+const AuthenticatedDashboardRouteWithChildren =
+  AuthenticatedDashboardRoute._addFileChildren(
+    AuthenticatedDashboardRouteChildren,
   )
 
 interface AuthenticatedRouteChildren {
-  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
-  AuthenticatedVehiclesVehiclesIdRoute: typeof AuthenticatedVehiclesVehiclesIdRouteWithChildren
-  AuthenticatedVehiclesIndexRoute: typeof AuthenticatedVehiclesIndexRoute
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRouteWithChildren
+  AuthenticatedLogsSearchVehicleRoute: typeof AuthenticatedLogsSearchVehicleRoute
+  AuthenticatedLogsCreateVehiclesIdRoute: typeof AuthenticatedLogsCreateVehiclesIdRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
-  AuthenticatedIndexRoute: AuthenticatedIndexRoute,
-  AuthenticatedVehiclesVehiclesIdRoute:
-    AuthenticatedVehiclesVehiclesIdRouteWithChildren,
-  AuthenticatedVehiclesIndexRoute: AuthenticatedVehiclesIndexRoute,
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRouteWithChildren,
+  AuthenticatedLogsSearchVehicleRoute: AuthenticatedLogsSearchVehicleRoute,
+  AuthenticatedLogsCreateVehiclesIdRoute:
+    AuthenticatedLogsCreateVehiclesIdRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
