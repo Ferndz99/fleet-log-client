@@ -1,18 +1,24 @@
+import ThemeToggle from '#/components/layout/ThemeToggle';
 import { Button } from '#/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '#/components/ui/card';
 import { Field, FieldError, FieldGroup, FieldLabel } from '#/components/ui/field';
 import { Input } from '#/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '#/components/ui/select';
 import { Textarea } from '#/components/ui/textarea';
+import { useAuth } from '#/features/auth/context/auth-context';
 import { createLog } from '#/features/logs/services/logs-api';
+import type { LogCreate } from '#/features/logs/types/logs';
 import { useVehicle } from '#/features/vehicles/hooks/useVehicle';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { createFileRoute } from '@tanstack/react-router'
-import { Car } from 'lucide-react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import axios from 'axios';
+import { Car, Loader2, LogOut } from 'lucide-react';
 import { Controller, useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import z from 'zod'
 
-export const Route = createFileRoute('/logs/create/$vehiclesId')({
+export const Route = createFileRoute('/_authenticated/logs/create/$vehiclesId')({
     component: RouteComponent,
 })
 
@@ -55,8 +61,29 @@ const logTypeOptions = [
 
 function RouteComponent() {
 
+    const navigate = useNavigate();
     const { vehiclesId } = Route.useParams()
     const { data, isLoading } = useVehicle(Number(vehiclesId))
+    const { logout } = useAuth()
+    const queryClient = useQueryClient();
+
+    const mutation = useMutation({
+        mutationFn: (data: LogCreate) => createLog(Number(vehiclesId), data),
+        onSuccess: () => {
+            toast.success("Registro creado con éxito!");
+            form.reset();
+            queryClient.invalidateQueries({ queryKey: ["vehicles"], exact: true });
+            queryClient.invalidateQueries({
+                queryKey: ["logs"],
+            });
+        },
+        onError: (error) => {
+            if (axios.isAxiosError(error)) {
+                toast.error(error.response?.data?.detail ?? "Error al crear el registro");
+            }
+        }
+    })
+
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -72,12 +99,17 @@ function RouteComponent() {
     const files = form.watch("files");
 
     function onSubmit(data: z.infer<typeof formSchema>) {
-        console.log(data);
-        createLog(Number(vehiclesId), data)
+        mutation.mutate(data)
     }
 
     return (
-        <div className='flex flex-col min-h-[80vh] items-center justify-center p-4'>
+        <div className='flex flex-col min-h-[80vh] items-center justify-center p-4 relative'>
+            <div className='absolute top-4 right-8 flex items-center justify-center gap-2'>
+                <Button onClick={logout} className="">
+                    <LogOut />
+                </Button>
+                <ThemeToggle />
+            </div>
             {/* Tarjeta del vehículo */}
             {isLoading && (
                 <Card className="w-full max-w-xl mx-auto mb-4 shadow-sm">
@@ -277,14 +309,22 @@ function RouteComponent() {
                             <Button
                                 type="submit"
                                 className="w-full sm:w-auto h-11"
+                                disabled={mutation.isPending}
                             >
-                                Crear log
+                                {mutation.isPending ? (
+                                    <>
+                                        <Loader2 className="animate-spin w-4 h-4" />
+                                        Creando...
+                                    </>
+                                ) : (
+                                    "Crear log"
+                                )}
                             </Button>
                             <Button
                                 variant="outline"
                                 type="button"
                                 className="w-full sm:w-auto h-11"
-                                onClick={() => form.reset()}
+                                onClick={() => navigate({ to: "/logs/search-vehicle" })}
 
                             >
                                 Cancelar

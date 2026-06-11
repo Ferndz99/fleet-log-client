@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import LoginForm from "#/components/auth/LoginForm";
+import ThemeToggle from "#/components/layout/ThemeToggle";
 
 export const Route = createFileRoute("/login")({
 	component: RouteComponent,
@@ -7,8 +8,11 @@ export const Route = createFileRoute("/login")({
 
 function RouteComponent() {
 	return (
-		<div className="mt-20">
-			<LoginForm/>
+		<div className="relative min-h-screen flex items-center justify-center p-4">
+			<div className="absolute top-4 right-4">
+				<ThemeToggle />
+			</div>
+			<LoginForm />
 		</div>
 	);
 }

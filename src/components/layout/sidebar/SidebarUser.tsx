@@ -22,6 +22,8 @@ import {
 	SidebarMenuItem,
 	useSidebar,
 } from "@/components/ui/sidebar";
+import { Button } from "#/components/ui/button";
+import { useAuth } from "#/features/auth/context/auth-context";
 
 function SidebarUser({
 	user,
@@ -33,6 +35,8 @@ function SidebarUser({
 	};
 }) {
 	const { isMobile } = useSidebar();
+
+	const { logout } = useAuth();
 
 	return (
 		<SidebarMenu>
@@ -84,9 +88,11 @@ function SidebarUser({
 							</DropdownMenuItem>
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
-						<DropdownMenuItem>
-							<LogOut />
-							Log out
+						<DropdownMenuItem asChild>
+							<Button onClick={logout} className="w-full flex items-center gap-2">
+								<LogOut />
+								Log out
+							</Button>
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>

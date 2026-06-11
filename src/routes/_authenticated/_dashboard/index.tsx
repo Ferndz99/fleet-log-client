@@ -4,7 +4,7 @@ import TableExample from "#/features/dashboard/components/TableExample";
 import ChartExample from "#/features/dashboard/components/ChartExample";
 import KpiCard from "#/features/dashboard/components/KpiCard";
 
-export const Route = createFileRoute("/_authenticated/")({
+export const Route = createFileRoute("/_authenticated/_dashboard/")({
 	component: RouteComponent,
 });
 

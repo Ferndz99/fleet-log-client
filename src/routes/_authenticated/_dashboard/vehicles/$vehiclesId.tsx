@@ -6,7 +6,7 @@ import VehicleStatsDetail from "#/features/vehicles/components/VehicleStatsDetai
 import { useVehicle } from "#/features/vehicles/hooks/useVehicle";
 import { createFileRoute, Outlet, useMatchRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/_authenticated/vehicles/$vehiclesId")({
+export const Route = createFileRoute("/_authenticated/_dashboard/vehicles/$vehiclesId")({
 	component: RouteComponent,
 });
 

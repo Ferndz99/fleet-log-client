@@ -3,6 +3,7 @@ import type { QueryClient } from '@tanstack/react-query'
 import {
   createRootRouteWithContext,
   HeadContent,
+  Outlet,
   Scripts,
 } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
@@ -10,6 +11,8 @@ import Footer from '../components/layout/Footer'
 import Header from '../components/layout/Header'
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 import appCss from '../styles.css?url'
+import { AuthProvider } from '#/features/auth/context/auth-context'
+import { Toaster } from "@/components/ui/sonner"
 
 interface MyRouterContext {
   queryClient: QueryClient
@@ -39,6 +42,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
     ],
   }),
   shellComponent: RootDocument,
+  component: RootComponent
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
@@ -68,4 +72,14 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </body>
     </html>
   )
+}
+
+
+function RootComponent() {
+  return (
+    <AuthProvider>
+      <Outlet />
+      <Toaster />
+    </AuthProvider>
+  );
 }
