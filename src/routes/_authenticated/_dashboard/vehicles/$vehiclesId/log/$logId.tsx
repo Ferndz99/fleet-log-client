@@ -1,3 +1,6 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { Eye } from "lucide-react";
+import { useState } from "react";
 import BackButton from "#/components/BackButton";
 import { Avatar, AvatarFallback } from "#/components/ui/avatar";
 import { Badge } from "#/components/ui/badge";
@@ -12,14 +15,11 @@ import {
 } from "#/components/ui/card";
 import { Separator } from "#/components/ui/separator";
 import { Skeleton } from "#/components/ui/skeleton";
+import { useLog } from "#/features/logs/hooks/useLog";
 import VehicleLogDetail from "#/features/vehicles/components/VehicleLogDetail";
 import VehicleLogDetailSkeleton from "#/features/vehicles/components/VehicleLogDetailSkeleton";
 import VehicleLogMediaGallery from "#/features/vehicles/components/VehicleLogMediaGallery";
 import VehicleLogMetadata from "#/features/vehicles/components/VehicleLogMetadata";
-import { useLog } from "#/features/vehicles/hooks/useLog";
-import { createFileRoute } from "@tanstack/react-router";
-import { Eye } from "lucide-react";
-import { useState } from "react";
 
 export const Route = createFileRoute(
 	"/_authenticated/_dashboard/vehicles/$vehiclesId/log/$logId",

@@ -57,9 +57,9 @@ function LoginForm() {
 	}
 
 	return (
-		<Card className={cn("w-full sm:max-w-sm mx-auto", form.formState.errors.root && "border border-destructive/50 rounded-md")}>
+		<Card className={cn("w-full max-w-sm mx-auto", form.formState.errors.root && "border border-destructive/50 rounded-md")}>
 			<CardHeader>
-				<CardTitle className="mx-auto text-3xl">Login</CardTitle>
+				<CardTitle className="mx-auto text-3xl">Inicio de sesion</CardTitle>
 			</CardHeader>
 			<CardContent>
 				<form

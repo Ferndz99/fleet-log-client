@@ -1,21 +1,15 @@
-import type { VehicleDetail } from "#/features/vehicles/types/vehicle";
 import axiosInstance from "#/lib/axios";
-import type { LogCreate } from "../types/logs";
+import type { LogCreate, LogDetail } from "../types/logs";
 
-export async function fetchVehiclePatent(
-	patent: string,
-): Promise<VehicleDetail> {
-	// const res = await fetch(
-	// 	`http://127.0.0.1:8000/api/v1/vehicles/by-patent/?patent=${patent}`,
-	// );
-	// if (!res.ok) throw new Error("Error");
-	// return res.json();
-
-	const {data} = await axiosInstance.get(`api/v1/vehicles/by-patent/?patent=${patent}`)
-	return data
+export async function fetchLog(
+	vehicleId: number,
+	logId: number,
+): Promise<LogDetail> {
+	const { data } = await axiosInstance.get(
+		`api/v1/vehicles/${vehicleId}/logs/${logId}`,
+	);
+	return data;
 }
-
-
 
 export async function createLog(vehicleId: number, payload: LogCreate) {
 	const formData = new FormData();
@@ -33,14 +27,4 @@ export async function createLog(vehicleId: number, payload: LogCreate) {
 	);
 
 	return data;
-
-	// const res = await fetch(
-	// 	`http://127.0.0.1:8000/api/v1/vehicles/${vehicleId}/logs/`,
-	// 	{
-	// 		method: "POST",
-	// 		body: formData,
-	// 	},
-	// );
-	// if (!res.ok) throw new Error("Error");
-	// return res.json();
 }
