@@ -8,6 +8,11 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import z from "zod";
 
+
+interface VehicleFormCreateProps {
+    className?: string;
+}
+
 const VEHICLE_BRANDS = [
     "Chevrolet", "Ford", "Toyota", "Honda", "Nissan",
     "Volkswagen", "Hyundai", "Kia", "Renault", "Peugeot",
@@ -24,7 +29,7 @@ const formSchema = z.object({
         .max(new Date().getFullYear(), "Año inválido"),
 })
 
-function VehicleFormCreate() {
+function VehicleFormCreate({ className }: VehicleFormCreateProps) {
 
     const [isOther, setIsOther] = useState(false);
     const [open, setOpen] = useState(false);
@@ -57,11 +62,16 @@ function VehicleFormCreate() {
         <Dialog open={open} onOpenChange={handleOpenChange}>
             <form id="form-create-vehicle" onSubmit={form.handleSubmit(onSubmit)}>
                 <DialogTrigger asChild>
-                    <Button>
+                    <Button className={className}>
                         Agregar Vehiculo
                     </Button>
                 </DialogTrigger>
-                <DialogContent className="">
+                <DialogContent className="
+		top-[10vh]
+		translate-y-0
+		sm:top-1/2
+		sm:-translate-y-1/2
+	">
                     <DialogHeader>
                         <DialogTitle>
                             Creacion de vehiculo
@@ -85,6 +95,7 @@ function VehicleFormCreate() {
                                         aria-invalid={fieldState.invalid}
                                         placeholder="ABCD12"
                                         autoComplete="off"
+                                        onChange={(e) => field.onChange(e.target.value.toUpperCase())}
 
                                     />
                                     {fieldState.invalid && (

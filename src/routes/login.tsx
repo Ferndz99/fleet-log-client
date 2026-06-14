@@ -8,7 +8,7 @@ export const Route = createFileRoute("/login")({
 
 function RouteComponent() {
 	return (
-		<div className="relative min-h-screen flex items-center justify-center p-4">
+		<div className="relative min-h-screen flex justify-center items-start lg:items-center pt-24 lg:pt-0">
 			<div className="absolute top-4 right-4">
 				<ThemeToggle />
 			</div>
