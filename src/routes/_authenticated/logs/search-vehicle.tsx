@@ -1,3 +1,9 @@
+import { zodResolver } from '@hookform/resolvers/zod'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { LogOut, Search } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { Controller, useForm } from 'react-hook-form'
+import z from 'zod'
 import ThemeToggle from '#/components/layout/ThemeToggle'
 import { Button } from '#/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '#/components/ui/card'
@@ -5,13 +11,7 @@ import { Field, FieldError, FieldGroup, FieldLabel } from '#/components/ui/field
 import { InputGroup, InputGroupAddon, InputGroupInput } from '#/components/ui/input-group'
 import { Separator } from '#/components/ui/separator'
 import { useAuth } from '#/features/auth/context/auth-context'
-import { useVehicleByPatent } from '#/features/logs/hooks/useVehicleByPatent'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import { LogOut, Search } from 'lucide-react'
-import { useEffect, useState } from 'react'
-import { Controller, useForm } from 'react-hook-form'
-import z from 'zod'
+import { useVehicleByPatent } from '#/features/vehicles/hooks/useVehicleByPatent'
 
 export const Route = createFileRoute('/_authenticated/logs/search-vehicle')({
     component: RouteComponent,

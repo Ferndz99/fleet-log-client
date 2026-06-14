@@ -50,12 +50,12 @@ function RouteComponent() {
     return (
         <SidebarProvider>
             <AppSidebar />
-            <main className="flex flex-col flex-1">
+            <main className="flex flex-col flex-1 min-w-0">
                 <header className="flex items-center justify-between gap-2 border-b px-4 h-16">
                     <SidebarTrigger />
                     <ThemeToggle />
                 </header>
-                <div className="flex-1 p-4">
+                <div className="flex-1 p-4 min-w-0">
                     <Outlet />
                 </div>
             </main>
