@@ -38,6 +38,8 @@ function SidebarUser({
 
 	const { logout } = useAuth();
 
+	const {user: authUser} = useAuth()
+
 	return (
 		<SidebarMenu>
 			<SidebarMenuItem>
@@ -52,8 +54,8 @@ function SidebarUser({
 								<AvatarFallback className="rounded-lg">CN</AvatarFallback>
 							</Avatar>
 							<div className="grid flex-1 text-left text-sm leading-tight">
-								<span className="truncate font-medium">{user.name}</span>
-								<span className="truncate text-xs">{user.email}</span>
+								<span className="truncate font-medium">{authUser?.email}</span>
+								{/* <span className="truncate text-xs">{authUser.is_staff ? "Admin": "sdcs"}</span> */}
 							</div>
 							<ChevronsUpDown className="ml-auto size-4" />
 						</SidebarMenuButton>

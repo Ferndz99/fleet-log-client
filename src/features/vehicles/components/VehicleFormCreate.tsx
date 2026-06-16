@@ -4,9 +4,16 @@ import { Field, FieldError, FieldGroup, FieldLabel } from "#/components/ui/field
 import { Input } from "#/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "#/components/ui/select";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import z from "zod";
+import type { VehicleCreate } from "../types/vehicle";
+import { createVehicle } from "../services/vehicles-api";
+import { toast } from "sonner";
+import axios from "axios";
+import { handleApiErrors } from "#/lib/handle-api-errors";
+import { Loader2 } from "lucide-react";
 
 
 interface VehicleFormCreateProps {
@@ -33,6 +40,26 @@ function VehicleFormCreate({ className }: VehicleFormCreateProps) {
 
     const [isOther, setIsOther] = useState(false);
     const [open, setOpen] = useState(false);
+    const queryClient = useQueryClient();
+
+    const mutation = useMutation({
+        mutationFn: (data: VehicleCreate) => createVehicle(data),
+        onSuccess: () => {
+            toast.success("Registro creado con éxito!");
+            form.reset();
+            queryClient.invalidateQueries({ queryKey: ["vehicles"], exact: true });
+            queryClient.invalidateQueries({
+                queryKey: ["logs"],
+            });
+        },
+        onError: (error) => {
+            handleApiErrors(error, form);
+            // if (axios.isAxiosError(error)) {
+            //     toast.error(error.response?.data?.detail ?? "Error al crear el registro");
+            // }
+        }
+    })
+
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -46,8 +73,7 @@ function VehicleFormCreate({ className }: VehicleFormCreateProps) {
 
 
     function onSubmit(data: z.infer<typeof formSchema>) {
-        console.log(data);
-
+        mutation.mutate(data)
     }
 
     function handleOpenChange(isOpen: boolean) {
@@ -224,7 +250,18 @@ function VehicleFormCreate({ className }: VehicleFormCreateProps) {
                             <DialogClose asChild>
                                 <Button variant="outline" >Cancelar</Button>
                             </DialogClose>
-                            <Button type="submit" form="form-create-vehicle" >Guardar</Button>
+                            <Button type="submit" form="form-create-vehicle"
+                                disabled={mutation.isPending}
+                            >
+                                {mutation.isPending ? (
+                                    <>
+                                        <Loader2 className="animate-spin w-4 h-4" />
+                                        Creando...
+                                    </>
+                                ) : (
+                                    "Crear Vehiculo"
+                                )}
+                            </Button>
                         </DialogFooter>
 
                     </FieldGroup>
