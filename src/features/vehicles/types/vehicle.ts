@@ -45,3 +45,10 @@ export interface CreatedBy {
 	id: number;
 	email: string;
 }
+
+export interface VehicleCreate {
+	patent: string;
+	brand: string;
+	model: string;
+	year: number;
+}

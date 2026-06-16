@@ -1,6 +1,7 @@
 import { Button } from "#/components/ui/button";
 import { Card, CardContent } from "#/components/ui/card";
 import { Skeleton } from "#/components/ui/skeleton";
+import { CreateLogDialog } from "#/features/logs/components/CreateLogDialog";
 import type { VehicleDetail } from "../types/vehicle";
 import { VehicleHeaderSkeleton } from "./VehicleHeaderDetailSkeleton";
 
@@ -29,7 +30,11 @@ function VehicleHeaderDetail({ vehicle, isLoading }: VehicleHeaderProps) {
 					</p>
 				</div>
 
-				<Button size={"lg"}>Agregar registro</Button>
+				{vehicle?.id && <CreateLogDialog vehicleId={vehicle.id} />}
+
+				{/* <CreateLogDialog vehicleId={vehicle?.id}/> */}
+
+				{/* <Button size={"lg"}>Agregar registro</Button> */}
 			</CardContent>
 		</Card>
 	);

@@ -1,5 +1,6 @@
-import { useState } from "react";
 import { type SortingState } from "@tanstack/react-table";
+import { useState } from "react";
+import { DataTable } from "#/components/DataTable";
 import {
 	Card,
 	CardContent,
@@ -8,12 +9,12 @@ import {
 	CardTitle,
 } from "#/components/ui/card";
 import { Input } from "#/components/ui/input";
-import { useVehicles } from "../hooks/useVehicles";
-import VehicleFormCreate from "./VehicleFormCreate";
 import { useDebounce } from "#/hooks/useDebounce";
-import { DataTable } from "#/components/DataTable";
-import { VehicleColumns } from "./vehicleColumns";
 import { toOrdering } from "#/lib/to-ordering";
+import { useVehicles } from "../hooks/useVehicles";
+import { RefreshInfoButton } from "./RefreshVehiclesButton";
+import VehicleFormCreate from "./VehicleFormCreate";
+import { VehicleColumns } from "./vehicleColumns";
 
 
 const PAGE_SIZE = 10;
@@ -36,7 +37,7 @@ function VehiclesTable() {
 		setPage(1);
 	};
 
-	const { data, isLoading, isError } = useVehicles({
+	const { data, isLoading, isError, refetch, isFetching } = useVehicles({
 		search: debouncedSearch,
 		ordering: toOrdering(sorting),
 		page,
@@ -63,15 +64,24 @@ function VehiclesTable() {
 					totalPages={totalPages}
 					onPageChange={setPage}
 					toolbar={
-						<>
+						<div className="flex w-full flex-col gap-2 md:flex-row md:items-center md:justify-between">
 							<Input
 								placeholder="Buscar por patente, modelo o marca..."
 								value={search}
 								onChange={(e) => setSearch(e.target.value)}
-								className="w-full sm:max-w-md h-10 sm:h-9"
+								className="w-full md:max-w-sm"
 							/>
-							<VehicleFormCreate className="w-full sm:w-auto" />
-						</>
+
+							<div className="flex flex-col gap-2 md:flex-row md:ml-auto">
+								<VehicleFormCreate className="w-full md:w-auto" />
+
+								<RefreshInfoButton
+									refetch={refetch}
+									isFetching={isFetching}
+									className="w-full md:w-auto"
+								/>
+							</div>
+						</div>
 					}
 				/>
 			</CardContent>

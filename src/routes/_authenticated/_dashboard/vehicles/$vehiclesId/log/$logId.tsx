@@ -30,7 +30,7 @@ export const Route = createFileRoute(
 function RouteComponent() {
 	const { vehiclesId, logId } = Route.useParams();
 
-	const { data, isLoading, error, isError } = useLog(
+	const { data, isLoading, isError } = useLog(
 		Number(vehiclesId),
 		Number(logId),
 	);

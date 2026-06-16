@@ -2,6 +2,7 @@ import axiosInstance from "#/lib/axios";
 import type {
 	PaginatedResponse,
 	Vehicle,
+	VehicleCreate,
 	VehicleDetail,
 	VehiclesParams,
 } from "../types/vehicle";
@@ -44,5 +45,12 @@ export async function fetchVehicleByPatent(
 	const { data } = await axiosInstance.get(
 		`api/v1/vehicles/by-patent/?patent=${patent}`,
 	);
+	return data;
+}
+
+export async function createVehicle(
+	payload: VehicleCreate,
+): Promise<VehicleDetail> {
+	const { data } = await axiosInstance.post("api/v1/vehicles/", payload);
 	return data;
 }

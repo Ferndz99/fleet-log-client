@@ -15,7 +15,7 @@ function RouteComponent() {
 	const matchRoute = useMatchRoute();
 	const isChildRoute = matchRoute({ to: "/vehicles/$vehiclesId/log/$logId" });
 
-	const { data, isLoading, error } = useVehicle(Number(vehiclesId));
+	const { data, isLoading, error, refetch, isFetching, isError } = useVehicle(Number(vehiclesId));
 
 	if (isChildRoute) return <Outlet />;
 
@@ -23,7 +23,7 @@ function RouteComponent() {
 
 	return (
 		<div className="space-y-4">
-			<BackButton fallbackTo="/vehicles/"/>
+			<BackButton fallbackTo="/vehicles/" />
 			<VehicleHeaderDetail vehicle={data} isLoading={isLoading} />
 			<VehicleStatsDetail
 				logCount={data?.logs.length}
@@ -31,7 +31,7 @@ function RouteComponent() {
 				isLoading={isLoading}
 			/>
 			<VehicleInfoCardDetail vehicle={data} isLoading={isLoading} />
-			<VehicleLogsTable logs={data?.logs} vehicleId={Number(vehiclesId)} />
+			<VehicleLogsTable logs={data?.logs} vehicleId={Number(vehiclesId)} refetch={refetch} isFetching={isFetching} isLoading={isLoading} isError={isError} />
 		</div>
 	);
 }

@@ -1,6 +1,11 @@
 import { Badge } from "#/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "#/components/ui/card";
-import type { LogDetail } from "../types/vehicle";
+import { Label } from "#/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "#/components/ui/select";
+import { Separator } from "#/components/ui/separator";
+import { useUpdateLogStatus } from "#/features/logs/hooks/useUpdateLogStatus";
+import type { LogDetail, LogStatus, UpdateLogStatusPayload } from "#/features/logs/types/logs";
+// import type { LogDetail } from "../types/vehicle";
 
 
 interface VehicleLogDetailProps {
@@ -24,9 +29,65 @@ function VehicleLogDetail({ log }: VehicleLogDetailProps) {
 	const statusLabels: Record<string, string> = {
 		pending: "Pendiente",
 		resolved: "Resuelto",
+		reviewed: "revisado",
 	};
 
+	const updateLogStatus = useUpdateLogStatus()
+
+
+
 	return (
+
+		// <Card className="h-full flex flex-col">
+		// 	<CardHeader className="pb-3">
+		// 		<div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+		// 			<CardTitle className="text-lg leading-snug sm:text-xl">
+		// 				{log?.title}
+		// 			</CardTitle>
+		// 			<div className="flex flex-wrap gap-2 shrink-0">
+		// 				<Badge variant="outline" className="h-7 text-xs">
+		// 					{typeLabels[log?.type ?? ""] ?? log?.type}
+		// 				</Badge>
+		// 				<Badge
+		// 					className={`${statusColors[log?.status ?? ""] || ""} capitalize border-none h-7 text-xs`}
+		// 				>
+		// 					{statusLabels[log?.status ?? ""] ?? log?.status}
+		// 				</Badge>
+		// 			</div>
+		// 		</div>
+		// 	</CardHeader>
+
+		// 	<Separator />
+
+		// 	<CardContent className="flex flex-col gap-5 pt-5 flex-1">
+		// 		<div className="space-y-2">
+		// 			<Label className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+		// 				Estado
+		// 			</Label>
+		// 			<Select value={log?.status}>
+		// 				<SelectTrigger className="w-full sm:w-52">
+		// 					<SelectValue />
+		// 				</SelectTrigger>
+		// 				<SelectContent position="popper">
+		// 					<SelectItem value="pending">Pendiente</SelectItem>
+		// 					<SelectItem value="reviewed">Revisado</SelectItem>
+		// 					<SelectItem value="resolved">Resuelto</SelectItem>
+		// 				</SelectContent>
+		// 			</Select>
+		// 		</div>
+
+		// 		{log?.detail && (
+		// 			<div className="space-y-2">
+		// 				<Label className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+		// 					Detalle
+		// 				</Label>
+		// 				<p className="text-sm leading-relaxed text-foreground/80 whitespace-pre-wrap">
+		// 					{log.detail}
+		// 				</p>
+		// 			</div>
+		// 		)}
+		// 	</CardContent>
+		// </Card>
 
 		<Card className="h-full">
 			<CardHeader>
@@ -50,8 +111,45 @@ function VehicleLogDetail({ log }: VehicleLogDetailProps) {
 				</div>
 			</CardHeader>
 			<CardContent>
+				<div className="space-y-2">
+					<Label>Estado</Label>
 
-				<p className="">{log?.detail}</p>
+					<Select
+						value={log?.status}
+						disabled={updateLogStatus.isPending}
+						onValueChange={(value) =>
+							updateLogStatus.mutate({
+								vehicleId: Number(log?.vehicle_id),
+								logId: Number(log?.id),
+								payload: { status: value } as UpdateLogStatusPayload
+							})
+						}
+					>
+						<SelectTrigger className="w-full sm:w-55">
+							<SelectValue />
+						</SelectTrigger>
+
+						<SelectContent position="popper">
+							<SelectItem value="pending">
+								Pendiente
+							</SelectItem>
+
+							<SelectItem value="reviewed">
+								Revisado
+							</SelectItem>
+
+							<SelectItem value="resolved">
+								Resuelto
+							</SelectItem>
+						</SelectContent>
+					</Select>
+				</div>
+				<div>
+					<Label>
+						Detalle
+					</Label>
+					<p className="">{log?.detail}</p>
+				</div>
 			</CardContent>
 		</Card>
 

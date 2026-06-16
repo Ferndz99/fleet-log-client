@@ -18,7 +18,7 @@ export function DataTablePagination({
 
     return (
         <div className="flex items-center justify-center lg:justify-between mt-4">
-            <p className="text-sm text-muted-foreground hidden lg:visible">
+            <p className="text-sm text-muted-foreground hidden md:block">
                 Página {page} de {totalPages || 1}
             </p>
             <div className="flex items-center gap-2">

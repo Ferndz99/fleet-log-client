@@ -30,3 +30,9 @@ export interface MediaFile {
 	type_display: string;
 	vehicle_log_id: number;
 }
+
+export type LogStatus = "pending" | "reviewed" | "resolved";
+
+export interface UpdateLogStatusPayload {
+	status: LogStatus;
+}
