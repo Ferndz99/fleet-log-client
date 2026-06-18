@@ -1,6 +1,11 @@
 import type { PaginatedResponse } from "#/features/vehicles/types/vehicle";
 import axiosInstance from "#/lib/axios";
-import type { User, UsersParams } from "../types/users";
+import type {
+	InvitationCreate,
+	InvitationDetail,
+	User,
+	UsersParams,
+} from "../types/users";
 
 export async function fetchUsers(
 	params: UsersParams,
@@ -12,6 +17,14 @@ export async function fetchUsers(
 			page: params.page && params.page > 1 ? params.page : undefined,
 		},
 	});
+
+	return data;
+}
+
+export async function createInvitation(
+	payload: InvitationCreate,
+): Promise<InvitationDetail> {
+	const { data } = await axiosInstance.post("api/v1/invitations/", payload);
 
 	return data;
 }

@@ -24,3 +24,19 @@ export interface Profile {
 	address: string;
 	updated_at: string;
 }
+
+export interface InvitationCreate {
+	email: string;
+	is_staff: boolean;
+}
+
+export interface InvitationDetail {
+	id: number;
+	email: string;
+	token_hash: string;
+	status: string;
+	is_staff: boolean;
+	expires_at: string;
+	created_at: string;
+	invited_by: number;
+}

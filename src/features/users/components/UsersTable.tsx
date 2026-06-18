@@ -9,6 +9,7 @@ import { DataTable } from "#/components/DataTable";
 import { UserColumns } from "./UserColumns";
 import { RefreshInfoButton } from "#/features/vehicles/components/RefreshVehiclesButton";
 import { Input } from "#/components/ui/input";
+import InvitationCreateForm from "./InvitationCreateForm";
 
 function UsersTable() {
 
@@ -63,6 +64,7 @@ function UsersTable() {
 
                             <div className="flex flex-col gap-2 md:flex-row md:ml-auto">
                                 {/* <VehicleFormCreate className="w-full md:w-auto" /> */}
+                                <InvitationCreateForm/>
 
                                 <RefreshInfoButton
                                     refetch={refetch}
