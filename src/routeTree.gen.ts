@@ -18,6 +18,7 @@ import { Route as AuthenticatedDashboardRouteImport } from './routes/_authentica
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/_dashboard/index'
 import { Route as AuthenticatedLogsSearchVehicleRouteImport } from './routes/_authenticated/logs/search-vehicle'
 import { Route as AuthenticatedDashboardVehiclesIndexRouteImport } from './routes/_authenticated/_dashboard/vehicles/index'
+import { Route as AuthenticatedDashboardUsersIndexRouteImport } from './routes/_authenticated/_dashboard/users/index'
 import { Route as AuthenticatedLogsCreateVehiclesIdRouteImport } from './routes/_authenticated/logs/create/$vehiclesId'
 import { Route as AuthenticatedDashboardVehiclesVehiclesIdRouteImport } from './routes/_authenticated/_dashboard/vehicles/$vehiclesId'
 import { Route as AuthenticatedDashboardVehiclesVehiclesIdLogLogIdRouteImport } from './routes/_authenticated/_dashboard/vehicles/$vehiclesId/log/$logId'
@@ -68,6 +69,12 @@ const AuthenticatedDashboardVehiclesIndexRoute =
     path: '/vehicles/',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
+const AuthenticatedDashboardUsersIndexRoute =
+  AuthenticatedDashboardUsersIndexRouteImport.update({
+    id: '/users/',
+    path: '/users/',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
 const AuthenticatedLogsCreateVehiclesIdRoute =
   AuthenticatedLogsCreateVehiclesIdRouteImport.update({
     id: '/logs/create/$vehiclesId',
@@ -96,6 +103,7 @@ export interface FileRoutesByFullPath {
   '/logs/search-vehicle': typeof AuthenticatedLogsSearchVehicleRoute
   '/vehicles/$vehiclesId': typeof AuthenticatedDashboardVehiclesVehiclesIdRouteWithChildren
   '/logs/create/$vehiclesId': typeof AuthenticatedLogsCreateVehiclesIdRoute
+  '/users/': typeof AuthenticatedDashboardUsersIndexRoute
   '/vehicles/': typeof AuthenticatedDashboardVehiclesIndexRoute
   '/vehicles/$vehiclesId/log/$logId': typeof AuthenticatedDashboardVehiclesVehiclesIdLogLogIdRoute
 }
@@ -108,6 +116,7 @@ export interface FileRoutesByTo {
   '/logs/search-vehicle': typeof AuthenticatedLogsSearchVehicleRoute
   '/vehicles/$vehiclesId': typeof AuthenticatedDashboardVehiclesVehiclesIdRouteWithChildren
   '/logs/create/$vehiclesId': typeof AuthenticatedLogsCreateVehiclesIdRoute
+  '/users': typeof AuthenticatedDashboardUsersIndexRoute
   '/vehicles': typeof AuthenticatedDashboardVehiclesIndexRoute
   '/vehicles/$vehiclesId/log/$logId': typeof AuthenticatedDashboardVehiclesVehiclesIdLogLogIdRoute
 }
@@ -123,6 +132,7 @@ export interface FileRoutesById {
   '/_authenticated/_dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/_authenticated/_dashboard/vehicles/$vehiclesId': typeof AuthenticatedDashboardVehiclesVehiclesIdRouteWithChildren
   '/_authenticated/logs/create/$vehiclesId': typeof AuthenticatedLogsCreateVehiclesIdRoute
+  '/_authenticated/_dashboard/users/': typeof AuthenticatedDashboardUsersIndexRoute
   '/_authenticated/_dashboard/vehicles/': typeof AuthenticatedDashboardVehiclesIndexRoute
   '/_authenticated/_dashboard/vehicles/$vehiclesId/log/$logId': typeof AuthenticatedDashboardVehiclesVehiclesIdLogLogIdRoute
 }
@@ -137,6 +147,7 @@ export interface FileRouteTypes {
     | '/logs/search-vehicle'
     | '/vehicles/$vehiclesId'
     | '/logs/create/$vehiclesId'
+    | '/users/'
     | '/vehicles/'
     | '/vehicles/$vehiclesId/log/$logId'
   fileRoutesByTo: FileRoutesByTo
@@ -149,6 +160,7 @@ export interface FileRouteTypes {
     | '/logs/search-vehicle'
     | '/vehicles/$vehiclesId'
     | '/logs/create/$vehiclesId'
+    | '/users'
     | '/vehicles'
     | '/vehicles/$vehiclesId/log/$logId'
   id:
@@ -163,6 +175,7 @@ export interface FileRouteTypes {
     | '/_authenticated/_dashboard/'
     | '/_authenticated/_dashboard/vehicles/$vehiclesId'
     | '/_authenticated/logs/create/$vehiclesId'
+    | '/_authenticated/_dashboard/users/'
     | '/_authenticated/_dashboard/vehicles/'
     | '/_authenticated/_dashboard/vehicles/$vehiclesId/log/$logId'
   fileRoutesById: FileRoutesById
@@ -240,6 +253,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardVehiclesIndexRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
+    '/_authenticated/_dashboard/users/': {
+      id: '/_authenticated/_dashboard/users/'
+      path: '/users'
+      fullPath: '/users/'
+      preLoaderRoute: typeof AuthenticatedDashboardUsersIndexRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
     '/_authenticated/logs/create/$vehiclesId': {
       id: '/_authenticated/logs/create/$vehiclesId'
       path: '/logs/create/$vehiclesId'
@@ -282,6 +302,7 @@ const AuthenticatedDashboardVehiclesVehiclesIdRouteWithChildren =
 interface AuthenticatedDashboardRouteChildren {
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
   AuthenticatedDashboardVehiclesVehiclesIdRoute: typeof AuthenticatedDashboardVehiclesVehiclesIdRouteWithChildren
+  AuthenticatedDashboardUsersIndexRoute: typeof AuthenticatedDashboardUsersIndexRoute
   AuthenticatedDashboardVehiclesIndexRoute: typeof AuthenticatedDashboardVehiclesIndexRoute
 }
 
@@ -290,6 +311,8 @@ const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
     AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
     AuthenticatedDashboardVehiclesVehiclesIdRoute:
       AuthenticatedDashboardVehiclesVehiclesIdRouteWithChildren,
+    AuthenticatedDashboardUsersIndexRoute:
+      AuthenticatedDashboardUsersIndexRoute,
     AuthenticatedDashboardVehiclesIndexRoute:
       AuthenticatedDashboardVehiclesIndexRoute,
   }
