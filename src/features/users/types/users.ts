@@ -32,6 +32,7 @@ export interface InvitationCreate {
 
 export interface InvitationDetail {
 	id: number;
+    invited_by_email: string
 	email: string;
 	token_hash: string;
 	status: string;
@@ -39,4 +40,11 @@ export interface InvitationDetail {
 	expires_at: string;
 	created_at: string;
 	invited_by: number;
+}
+
+
+export interface InvitationsParams {
+	email: string;
+	ordering?: string;
+	page?: number;
 }

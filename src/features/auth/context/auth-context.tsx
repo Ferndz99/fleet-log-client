@@ -1,12 +1,13 @@
 import { useNavigate } from "@tanstack/react-router";
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { authService } from "../services/auth-api";
+import type { User } from "#/features/users/types/users";
 
-type User = {
-    id: string;
-    email: string;
-    is_staff: boolean;
-};
+// type User = {
+//     id: string;
+//     email: string;
+//     is_staff: boolean;
+// };
 
 type AuthContextType = {
     user: User | null;
