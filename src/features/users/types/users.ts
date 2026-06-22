@@ -79,3 +79,12 @@ export interface ValidateTokenResponse {
 	is_staff: boolean;
 	expires_at: string;
 }
+
+export interface PasswordReset {
+	email: string;
+}
+
+export interface PasswordResetConfirm {
+	new_password: string;
+	re_new_password: string;
+}

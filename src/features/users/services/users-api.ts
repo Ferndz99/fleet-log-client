@@ -7,6 +7,8 @@ import type {
 	InvitationCreate,
 	InvitationDetail,
 	InvitationsParams,
+	PasswordReset,
+	PasswordResetConfirm,
 	User,
 	UsersParams,
 	ValidateTokenResponse,
@@ -72,7 +74,10 @@ export async function acceptInvitation(
 		formData.append("profile.avatar", payload.profile.avatar);
 	}
 
-	const { data } = await axiosInstance.post("api/v1/invitations/accept/", formData);
+	const { data } = await axiosInstance.post(
+		"api/v1/invitations/accept/",
+		formData,
+	);
 	return data;
 }
 
@@ -86,4 +91,27 @@ export async function validateInvitationToken(
 	});
 
 	return data;
+}
+
+export async function requestPasswordReset(
+	payload: PasswordReset,
+): Promise<void> {
+	await axiosInstance.post("api/v1/users/reset_password/", payload);
+}
+
+export async function passwordResetConfirm(
+	payload: PasswordResetConfirm,
+	uid: string,
+	token: string,
+): Promise<void> {
+	const payload_full = {
+		...payload,
+		uid,
+		token,
+	};
+
+	await axiosInstance.post(
+		"api/v1/users/reset_password_confirm/",
+		payload_full,
+	);
 }
