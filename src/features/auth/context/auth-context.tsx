@@ -1,15 +1,16 @@
 import { useNavigate } from "@tanstack/react-router";
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import type { UserDetail } from "#/features/users/types/users";
 import { authService } from "../services/auth-api";
 
-type User = {
-    id: string;
-    email: string;
-    is_staff: boolean;
-};
+// type User = {
+//     id: string;
+//     email: string;
+//     is_staff: boolean;
+// };
 
 type AuthContextType = {
-    user: User | null;
+    user: UserDetail | null;
     isAuthenticated: boolean;
     status: AuthStatus;
     login: (email: string, password: string) => Promise<void>;
@@ -22,7 +23,7 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<UserDetail | null>(null);
     const [loading, setLoading] = useState(true);
     const [status, setStatus] = useState<AuthStatus>("loading");
     const navigate = useNavigate();

@@ -13,7 +13,7 @@ const config = defineConfig({
 		host: "0.0.0.0",
 		proxy: {
 			"/api": {
-				target: "http://192.168.1.152:8000",
+				target: "http://192.168.1.24:8000",
 				changeOrigin: true,
 			},
 		},

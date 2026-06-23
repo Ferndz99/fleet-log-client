@@ -40,6 +40,10 @@ function SidebarUser({
 
 	const {user: authUser} = useAuth()
 
+	const initials = authUser?.profile
+        ? `${authUser?.profile.first_name[0]}${authUser?.profile.last_name[0]}`.toUpperCase()
+        : user?.email[0].toUpperCase();
+
 	return (
 		<SidebarMenu>
 			<SidebarMenuItem>
@@ -50,12 +54,12 @@ function SidebarUser({
 							className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
 						>
 							<Avatar className="h-8 w-8 rounded-lg">
-								<AvatarImage src={user.avatar} alt={user.name} />
-								<AvatarFallback className="rounded-lg">CN</AvatarFallback>
+								<AvatarImage src={authUser?.profile?.avatar} alt={authUser?.profile?.full_name} />
+								<AvatarFallback className="rounded-lg">{initials}</AvatarFallback>
 							</Avatar>
 							<div className="grid flex-1 text-left text-sm leading-tight">
 								<span className="truncate font-medium">{authUser?.email}</span>
-								{/* <span className="truncate text-xs">{authUser.is_staff ? "Admin": "sdcs"}</span> */}
+								<span className="truncate text-xs">{authUser?.profile?.full_name}</span>
 							</div>
 							<ChevronsUpDown className="ml-auto size-4" />
 						</SidebarMenuButton>

@@ -74,7 +74,7 @@ const data = {
 			items: [
 				{
 					title: "Usuarios",
-					url: "#",
+					url: "/users",
 				},
 				{
 					title: "Invitaciones",
