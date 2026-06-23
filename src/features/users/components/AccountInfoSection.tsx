@@ -1,10 +1,10 @@
 // components/AccountInfoSection.tsx
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import type { User } from "../types/users";
+import type { UserDetail } from "../types/users";
 
 interface AccountInfoSectionProps {
-    user?: User;
+    user?: UserDetail;
     isLoading: boolean;
 }
 

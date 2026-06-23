@@ -1,10 +1,10 @@
-import { createColumnHelper } from "@tanstack/react-table";
-import type { User } from "../types/users";
 import { Link } from "@tanstack/react-router";
+import { createColumnHelper } from "@tanstack/react-table";
 import { Pencil } from "lucide-react";
+import type { UserDetail } from "../types/users";
 
 
-const columnHelper = createColumnHelper<User>();
+const columnHelper = createColumnHelper<UserDetail>();
 
 
 export const UserColumns = [

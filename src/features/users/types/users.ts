@@ -4,7 +4,7 @@ export interface UsersParams {
 	page?: number;
 }
 
-export interface User {
+export interface UserDetail {
 	id: number;
 	email: string;
 	is_staff: boolean;
@@ -20,7 +20,7 @@ export interface Profile {
 	rut: string;
 	phone: string;
 	birth_date: string;
-	avatar: File;
+	avatar: string;
 	address: string;
 	updated_at: string;
 }

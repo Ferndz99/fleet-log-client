@@ -9,14 +9,14 @@ import type {
 	InvitationsParams,
 	PasswordReset,
 	PasswordResetConfirm,
-	User,
+	UserDetail,
 	UsersParams,
 	ValidateTokenResponse,
 } from "../types/users";
 
 export async function fetchUsers(
 	params: UsersParams,
-): Promise<PaginatedResponse<User>> {
+): Promise<PaginatedResponse<UserDetail>> {
 	const { data } = await axiosInstance.get("api/v1/users/", {
 		params: {
 			search: params.search || undefined,
@@ -36,7 +36,7 @@ export async function createInvitation(
 	return data;
 }
 
-export async function fetchUser(userId: number): Promise<User> {
+export async function fetchUser(userId: number): Promise<UserDetail> {
 	const { data } = await axiosInstance.get(`api/v1/users/${userId}/`);
 	return data;
 }

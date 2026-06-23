@@ -16,6 +16,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
 import { Route as DemoTableRouteImport } from './routes/demo/table'
+import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/_dashboard'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/_dashboard/index'
 import { Route as PasswordResetUidTokenRouteImport } from './routes/password-reset.$uid.$token'
@@ -60,6 +61,11 @@ const DemoTableRoute = DemoTableRouteImport.update({
   id: '/demo/table',
   path: '/demo/table',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAccountRoute = AuthenticatedAccountRouteImport.update({
+  id: '/account',
+  path: '/account',
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/_dashboard',
@@ -125,6 +131,7 @@ export interface FileRoutesByFullPath {
   '/accept-invitation': typeof AcceptInvitationRoute
   '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/account': typeof AuthenticatedAccountRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/logs/search-vehicle': typeof AuthenticatedLogsSearchVehicleRoute
@@ -142,6 +149,7 @@ export interface FileRoutesByTo {
   '/accept-invitation': typeof AcceptInvitationRoute
   '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/account': typeof AuthenticatedAccountRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/logs/search-vehicle': typeof AuthenticatedLogsSearchVehicleRoute
@@ -161,6 +169,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/_dashboard': typeof AuthenticatedDashboardRouteWithChildren
+  '/_authenticated/account': typeof AuthenticatedAccountRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/_authenticated/logs/search-vehicle': typeof AuthenticatedLogsSearchVehicleRoute
@@ -181,6 +190,7 @@ export interface FileRouteTypes {
     | '/accept-invitation'
     | '/login'
     | '/reset-password'
+    | '/account'
     | '/demo/table'
     | '/demo/tanstack-query'
     | '/logs/search-vehicle'
@@ -198,6 +208,7 @@ export interface FileRouteTypes {
     | '/accept-invitation'
     | '/login'
     | '/reset-password'
+    | '/account'
     | '/demo/table'
     | '/demo/tanstack-query'
     | '/logs/search-vehicle'
@@ -216,6 +227,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/reset-password'
     | '/_authenticated/_dashboard'
+    | '/_authenticated/account'
     | '/demo/table'
     | '/demo/tanstack-query'
     | '/_authenticated/logs/search-vehicle'
@@ -290,6 +302,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/demo/table'
       preLoaderRoute: typeof DemoTableRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/account': {
+      id: '/_authenticated/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AuthenticatedAccountRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/_dashboard': {
       id: '/_authenticated/_dashboard'
@@ -407,12 +426,14 @@ const AuthenticatedDashboardRouteWithChildren =
 
 interface AuthenticatedRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRouteWithChildren
+  AuthenticatedAccountRoute: typeof AuthenticatedAccountRoute
   AuthenticatedLogsSearchVehicleRoute: typeof AuthenticatedLogsSearchVehicleRoute
   AuthenticatedLogsCreateVehiclesIdRoute: typeof AuthenticatedLogsCreateVehiclesIdRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRouteWithChildren,
+  AuthenticatedAccountRoute: AuthenticatedAccountRoute,
   AuthenticatedLogsSearchVehicleRoute: AuthenticatedLogsSearchVehicleRoute,
   AuthenticatedLogsCreateVehiclesIdRoute:
     AuthenticatedLogsCreateVehiclesIdRoute,
