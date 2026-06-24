@@ -96,7 +96,7 @@ const data = {
 				},
 				{
 					title: "Perfil",
-					url: "#",
+					url: "/account",
 				},
 			],
 		},
