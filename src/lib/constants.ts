@@ -22,3 +22,10 @@ export const passwordRequirements = [
 		test: (value: string) => /[^A-Za-z0-9]/.test(value),
 	},
 ];
+
+export const statusLabel = {
+	Incident: "Incidente",
+	Maintenance: "Mantenimiento",
+	Observation: "Observacion",
+	Cleaning: "Limpieza",
+};
