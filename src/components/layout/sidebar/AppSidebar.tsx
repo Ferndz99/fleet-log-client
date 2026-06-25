@@ -77,8 +77,8 @@ const data = {
 					url: "/users",
 				},
 				{
-					title: "Invitaciones",
-					url: "#",
+					title: "Membresias",
+					url: "/memberships",
 				},
 				{
 					title: "Roles y Permisos",

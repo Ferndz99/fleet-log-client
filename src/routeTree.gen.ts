@@ -23,9 +23,11 @@ import { Route as PasswordResetUidTokenRouteImport } from './routes/password-res
 import { Route as AuthenticatedLogsSearchVehicleRouteImport } from './routes/_authenticated/logs/search-vehicle'
 import { Route as AuthenticatedDashboardVehiclesIndexRouteImport } from './routes/_authenticated/_dashboard/vehicles/index'
 import { Route as AuthenticatedDashboardUsersIndexRouteImport } from './routes/_authenticated/_dashboard/users/index'
+import { Route as AuthenticatedDashboardMembershipsIndexRouteImport } from './routes/_authenticated/_dashboard/memberships/index'
 import { Route as AuthenticatedLogsCreateVehiclesIdRouteImport } from './routes/_authenticated/logs/create/$vehiclesId'
 import { Route as AuthenticatedDashboardVehiclesVehiclesIdRouteImport } from './routes/_authenticated/_dashboard/vehicles/$vehiclesId'
 import { Route as AuthenticatedDashboardUsersUserIdRouteImport } from './routes/_authenticated/_dashboard/users/$userId'
+import { Route as AuthenticatedDashboardMembershipsMembershipIdRouteImport } from './routes/_authenticated/_dashboard/memberships/$membershipId'
 import { Route as AuthenticatedDashboardVehiclesVehiclesIdLogLogIdRouteImport } from './routes/_authenticated/_dashboard/vehicles/$vehiclesId/log/$logId'
 
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
@@ -100,6 +102,12 @@ const AuthenticatedDashboardUsersIndexRoute =
     path: '/users/',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
+const AuthenticatedDashboardMembershipsIndexRoute =
+  AuthenticatedDashboardMembershipsIndexRouteImport.update({
+    id: '/memberships/',
+    path: '/memberships/',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
 const AuthenticatedLogsCreateVehiclesIdRoute =
   AuthenticatedLogsCreateVehiclesIdRouteImport.update({
     id: '/logs/create/$vehiclesId',
@@ -116,6 +124,12 @@ const AuthenticatedDashboardUsersUserIdRoute =
   AuthenticatedDashboardUsersUserIdRouteImport.update({
     id: '/users/$userId',
     path: '/users/$userId',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardMembershipsMembershipIdRoute =
+  AuthenticatedDashboardMembershipsMembershipIdRouteImport.update({
+    id: '/memberships/$membershipId',
+    path: '/memberships/$membershipId',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
 const AuthenticatedDashboardVehiclesVehiclesIdLogLogIdRoute =
@@ -136,9 +150,11 @@ export interface FileRoutesByFullPath {
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/logs/search-vehicle': typeof AuthenticatedLogsSearchVehicleRoute
   '/password-reset/$uid/$token': typeof PasswordResetUidTokenRoute
+  '/memberships/$membershipId': typeof AuthenticatedDashboardMembershipsMembershipIdRoute
   '/users/$userId': typeof AuthenticatedDashboardUsersUserIdRoute
   '/vehicles/$vehiclesId': typeof AuthenticatedDashboardVehiclesVehiclesIdRouteWithChildren
   '/logs/create/$vehiclesId': typeof AuthenticatedLogsCreateVehiclesIdRoute
+  '/memberships/': typeof AuthenticatedDashboardMembershipsIndexRoute
   '/users/': typeof AuthenticatedDashboardUsersIndexRoute
   '/vehicles/': typeof AuthenticatedDashboardVehiclesIndexRoute
   '/vehicles/$vehiclesId/log/$logId': typeof AuthenticatedDashboardVehiclesVehiclesIdLogLogIdRoute
@@ -154,9 +170,11 @@ export interface FileRoutesByTo {
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/logs/search-vehicle': typeof AuthenticatedLogsSearchVehicleRoute
   '/password-reset/$uid/$token': typeof PasswordResetUidTokenRoute
+  '/memberships/$membershipId': typeof AuthenticatedDashboardMembershipsMembershipIdRoute
   '/users/$userId': typeof AuthenticatedDashboardUsersUserIdRoute
   '/vehicles/$vehiclesId': typeof AuthenticatedDashboardVehiclesVehiclesIdRouteWithChildren
   '/logs/create/$vehiclesId': typeof AuthenticatedLogsCreateVehiclesIdRoute
+  '/memberships': typeof AuthenticatedDashboardMembershipsIndexRoute
   '/users': typeof AuthenticatedDashboardUsersIndexRoute
   '/vehicles': typeof AuthenticatedDashboardVehiclesIndexRoute
   '/vehicles/$vehiclesId/log/$logId': typeof AuthenticatedDashboardVehiclesVehiclesIdLogLogIdRoute
@@ -175,9 +193,11 @@ export interface FileRoutesById {
   '/_authenticated/logs/search-vehicle': typeof AuthenticatedLogsSearchVehicleRoute
   '/password-reset/$uid/$token': typeof PasswordResetUidTokenRoute
   '/_authenticated/_dashboard/': typeof AuthenticatedDashboardIndexRoute
+  '/_authenticated/_dashboard/memberships/$membershipId': typeof AuthenticatedDashboardMembershipsMembershipIdRoute
   '/_authenticated/_dashboard/users/$userId': typeof AuthenticatedDashboardUsersUserIdRoute
   '/_authenticated/_dashboard/vehicles/$vehiclesId': typeof AuthenticatedDashboardVehiclesVehiclesIdRouteWithChildren
   '/_authenticated/logs/create/$vehiclesId': typeof AuthenticatedLogsCreateVehiclesIdRoute
+  '/_authenticated/_dashboard/memberships/': typeof AuthenticatedDashboardMembershipsIndexRoute
   '/_authenticated/_dashboard/users/': typeof AuthenticatedDashboardUsersIndexRoute
   '/_authenticated/_dashboard/vehicles/': typeof AuthenticatedDashboardVehiclesIndexRoute
   '/_authenticated/_dashboard/vehicles/$vehiclesId/log/$logId': typeof AuthenticatedDashboardVehiclesVehiclesIdLogLogIdRoute
@@ -195,9 +215,11 @@ export interface FileRouteTypes {
     | '/demo/tanstack-query'
     | '/logs/search-vehicle'
     | '/password-reset/$uid/$token'
+    | '/memberships/$membershipId'
     | '/users/$userId'
     | '/vehicles/$vehiclesId'
     | '/logs/create/$vehiclesId'
+    | '/memberships/'
     | '/users/'
     | '/vehicles/'
     | '/vehicles/$vehiclesId/log/$logId'
@@ -213,9 +235,11 @@ export interface FileRouteTypes {
     | '/demo/tanstack-query'
     | '/logs/search-vehicle'
     | '/password-reset/$uid/$token'
+    | '/memberships/$membershipId'
     | '/users/$userId'
     | '/vehicles/$vehiclesId'
     | '/logs/create/$vehiclesId'
+    | '/memberships'
     | '/users'
     | '/vehicles'
     | '/vehicles/$vehiclesId/log/$logId'
@@ -233,9 +257,11 @@ export interface FileRouteTypes {
     | '/_authenticated/logs/search-vehicle'
     | '/password-reset/$uid/$token'
     | '/_authenticated/_dashboard/'
+    | '/_authenticated/_dashboard/memberships/$membershipId'
     | '/_authenticated/_dashboard/users/$userId'
     | '/_authenticated/_dashboard/vehicles/$vehiclesId'
     | '/_authenticated/logs/create/$vehiclesId'
+    | '/_authenticated/_dashboard/memberships/'
     | '/_authenticated/_dashboard/users/'
     | '/_authenticated/_dashboard/vehicles/'
     | '/_authenticated/_dashboard/vehicles/$vehiclesId/log/$logId'
@@ -352,6 +378,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardUsersIndexRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
+    '/_authenticated/_dashboard/memberships/': {
+      id: '/_authenticated/_dashboard/memberships/'
+      path: '/memberships'
+      fullPath: '/memberships/'
+      preLoaderRoute: typeof AuthenticatedDashboardMembershipsIndexRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
     '/_authenticated/logs/create/$vehiclesId': {
       id: '/_authenticated/logs/create/$vehiclesId'
       path: '/logs/create/$vehiclesId'
@@ -371,6 +404,13 @@ declare module '@tanstack/react-router' {
       path: '/users/$userId'
       fullPath: '/users/$userId'
       preLoaderRoute: typeof AuthenticatedDashboardUsersUserIdRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/_dashboard/memberships/$membershipId': {
+      id: '/_authenticated/_dashboard/memberships/$membershipId'
+      path: '/memberships/$membershipId'
+      fullPath: '/memberships/$membershipId'
+      preLoaderRoute: typeof AuthenticatedDashboardMembershipsMembershipIdRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
     '/_authenticated/_dashboard/vehicles/$vehiclesId/log/$logId': {
@@ -400,8 +440,10 @@ const AuthenticatedDashboardVehiclesVehiclesIdRouteWithChildren =
 
 interface AuthenticatedDashboardRouteChildren {
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
+  AuthenticatedDashboardMembershipsMembershipIdRoute: typeof AuthenticatedDashboardMembershipsMembershipIdRoute
   AuthenticatedDashboardUsersUserIdRoute: typeof AuthenticatedDashboardUsersUserIdRoute
   AuthenticatedDashboardVehiclesVehiclesIdRoute: typeof AuthenticatedDashboardVehiclesVehiclesIdRouteWithChildren
+  AuthenticatedDashboardMembershipsIndexRoute: typeof AuthenticatedDashboardMembershipsIndexRoute
   AuthenticatedDashboardUsersIndexRoute: typeof AuthenticatedDashboardUsersIndexRoute
   AuthenticatedDashboardVehiclesIndexRoute: typeof AuthenticatedDashboardVehiclesIndexRoute
 }
@@ -409,10 +451,14 @@ interface AuthenticatedDashboardRouteChildren {
 const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
   {
     AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
+    AuthenticatedDashboardMembershipsMembershipIdRoute:
+      AuthenticatedDashboardMembershipsMembershipIdRoute,
     AuthenticatedDashboardUsersUserIdRoute:
       AuthenticatedDashboardUsersUserIdRoute,
     AuthenticatedDashboardVehiclesVehiclesIdRoute:
       AuthenticatedDashboardVehiclesVehiclesIdRouteWithChildren,
+    AuthenticatedDashboardMembershipsIndexRoute:
+      AuthenticatedDashboardMembershipsIndexRoute,
     AuthenticatedDashboardUsersIndexRoute:
       AuthenticatedDashboardUsersIndexRoute,
     AuthenticatedDashboardVehiclesIndexRoute:

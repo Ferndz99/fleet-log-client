@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { createColumnHelper } from "@tanstack/react-table";
 import { Pencil } from "lucide-react";
 import type { UserDetail } from "../types/users";
+import { Badge } from "#/components/ui/badge";
 
 
 const columnHelper = createColumnHelper<UserDetail>();
@@ -27,6 +28,15 @@ export const UserColumns = [
     columnHelper.accessor("is_active", {
         header: "Activo",
         meta: { label: "Activo" },
+        cell: ({ getValue }) => {
+            const isActive = getValue<boolean>();
+
+            return (
+                <Badge variant={isActive ? "default" : "secondary"}>
+                    {isActive ? "Activo" : "Inactivo"}
+                </Badge>
+            );
+        },
     }),
     columnHelper.display({
         id: "actions",
