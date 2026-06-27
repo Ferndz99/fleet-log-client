@@ -6,6 +6,7 @@ import type {
 	GroupParams,
 	Permission,
 	PermissionsParams,
+	RequestAddGroupsToUser,
 	RequestAddRemovePermissions,
 	RequestAddRemoveUsers,
 	RequestGroup,
@@ -26,13 +27,13 @@ export async function fetchPermissions(
 }
 
 export async function fetchGroups(
-	params: GroupParams,
+	params?: GroupParams,
 ): Promise<PaginatedResponse<Group>> {
 	const { data } = await axiosInstance.get("api/v1/groups/", {
 		params: {
-			search: params.search || undefined,
-			ordering: params.ordering || undefined,
-			page: params.page && params.page > 1 ? params.page : undefined,
+			search: params?.search || undefined,
+			ordering: params?.ordering || undefined,
+			page: params?.page && params?.page > 1 ? params?.page : undefined,
 		},
 	});
 
@@ -91,4 +92,11 @@ export async function setUsers(
 	payload: RequestAddRemoveUsers,
 ): Promise<void> {
 	await axiosInstance.post(`api/v1/groups/${groupId}/set_users/`, payload);
+}
+
+export async function setGroupsToUsers(
+	userId: number,
+	payload: RequestAddGroupsToUser,
+): Promise<void> {
+	await axiosInstance.put(`api/v1/users/${userId}/set_groups/`, payload);
 }

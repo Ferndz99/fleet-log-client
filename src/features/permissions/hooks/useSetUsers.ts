@@ -11,6 +11,7 @@ export function useSetUsers(groupId: number) {
 		onSuccess: () => {
 			toast.success("Usuario(s) modifcados con exito!");
 			queryClient.invalidateQueries({ queryKey: ["group"] });
+			queryClient.invalidateQueries({ queryKey: ["user"] });
 		},
 		onError: () => {
 			toast.error("Error al modificar usuario(s)");

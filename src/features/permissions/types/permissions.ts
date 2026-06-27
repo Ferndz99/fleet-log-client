@@ -77,3 +77,7 @@ export interface RequestGroup {
 export interface RequestAddRemoveUsers {
 	user_ids: number[];
 }
+
+export interface RequestAddGroupsToUser {
+	group_ids: number[];
+}
