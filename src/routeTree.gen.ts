@@ -23,10 +23,12 @@ import { Route as PasswordResetUidTokenRouteImport } from './routes/password-res
 import { Route as AuthenticatedLogsSearchVehicleRouteImport } from './routes/_authenticated/logs/search-vehicle'
 import { Route as AuthenticatedDashboardVehiclesIndexRouteImport } from './routes/_authenticated/_dashboard/vehicles/index'
 import { Route as AuthenticatedDashboardUsersIndexRouteImport } from './routes/_authenticated/_dashboard/users/index'
+import { Route as AuthenticatedDashboardPermissionsIndexRouteImport } from './routes/_authenticated/_dashboard/permissions/index'
 import { Route as AuthenticatedDashboardMembershipsIndexRouteImport } from './routes/_authenticated/_dashboard/memberships/index'
 import { Route as AuthenticatedLogsCreateVehiclesIdRouteImport } from './routes/_authenticated/logs/create/$vehiclesId'
 import { Route as AuthenticatedDashboardVehiclesVehiclesIdRouteImport } from './routes/_authenticated/_dashboard/vehicles/$vehiclesId'
 import { Route as AuthenticatedDashboardUsersUserIdRouteImport } from './routes/_authenticated/_dashboard/users/$userId'
+import { Route as AuthenticatedDashboardPermissionsGroupIdRouteImport } from './routes/_authenticated/_dashboard/permissions/$groupId'
 import { Route as AuthenticatedDashboardMembershipsMembershipIdRouteImport } from './routes/_authenticated/_dashboard/memberships/$membershipId'
 import { Route as AuthenticatedDashboardVehiclesVehiclesIdLogLogIdRouteImport } from './routes/_authenticated/_dashboard/vehicles/$vehiclesId/log/$logId'
 
@@ -102,6 +104,12 @@ const AuthenticatedDashboardUsersIndexRoute =
     path: '/users/',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
+const AuthenticatedDashboardPermissionsIndexRoute =
+  AuthenticatedDashboardPermissionsIndexRouteImport.update({
+    id: '/permissions/',
+    path: '/permissions/',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
 const AuthenticatedDashboardMembershipsIndexRoute =
   AuthenticatedDashboardMembershipsIndexRouteImport.update({
     id: '/memberships/',
@@ -124,6 +132,12 @@ const AuthenticatedDashboardUsersUserIdRoute =
   AuthenticatedDashboardUsersUserIdRouteImport.update({
     id: '/users/$userId',
     path: '/users/$userId',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardPermissionsGroupIdRoute =
+  AuthenticatedDashboardPermissionsGroupIdRouteImport.update({
+    id: '/permissions/$groupId',
+    path: '/permissions/$groupId',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
 const AuthenticatedDashboardMembershipsMembershipIdRoute =
@@ -151,10 +165,12 @@ export interface FileRoutesByFullPath {
   '/logs/search-vehicle': typeof AuthenticatedLogsSearchVehicleRoute
   '/password-reset/$uid/$token': typeof PasswordResetUidTokenRoute
   '/memberships/$membershipId': typeof AuthenticatedDashboardMembershipsMembershipIdRoute
+  '/permissions/$groupId': typeof AuthenticatedDashboardPermissionsGroupIdRoute
   '/users/$userId': typeof AuthenticatedDashboardUsersUserIdRoute
   '/vehicles/$vehiclesId': typeof AuthenticatedDashboardVehiclesVehiclesIdRouteWithChildren
   '/logs/create/$vehiclesId': typeof AuthenticatedLogsCreateVehiclesIdRoute
   '/memberships/': typeof AuthenticatedDashboardMembershipsIndexRoute
+  '/permissions/': typeof AuthenticatedDashboardPermissionsIndexRoute
   '/users/': typeof AuthenticatedDashboardUsersIndexRoute
   '/vehicles/': typeof AuthenticatedDashboardVehiclesIndexRoute
   '/vehicles/$vehiclesId/log/$logId': typeof AuthenticatedDashboardVehiclesVehiclesIdLogLogIdRoute
@@ -171,10 +187,12 @@ export interface FileRoutesByTo {
   '/logs/search-vehicle': typeof AuthenticatedLogsSearchVehicleRoute
   '/password-reset/$uid/$token': typeof PasswordResetUidTokenRoute
   '/memberships/$membershipId': typeof AuthenticatedDashboardMembershipsMembershipIdRoute
+  '/permissions/$groupId': typeof AuthenticatedDashboardPermissionsGroupIdRoute
   '/users/$userId': typeof AuthenticatedDashboardUsersUserIdRoute
   '/vehicles/$vehiclesId': typeof AuthenticatedDashboardVehiclesVehiclesIdRouteWithChildren
   '/logs/create/$vehiclesId': typeof AuthenticatedLogsCreateVehiclesIdRoute
   '/memberships': typeof AuthenticatedDashboardMembershipsIndexRoute
+  '/permissions': typeof AuthenticatedDashboardPermissionsIndexRoute
   '/users': typeof AuthenticatedDashboardUsersIndexRoute
   '/vehicles': typeof AuthenticatedDashboardVehiclesIndexRoute
   '/vehicles/$vehiclesId/log/$logId': typeof AuthenticatedDashboardVehiclesVehiclesIdLogLogIdRoute
@@ -194,10 +212,12 @@ export interface FileRoutesById {
   '/password-reset/$uid/$token': typeof PasswordResetUidTokenRoute
   '/_authenticated/_dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/_authenticated/_dashboard/memberships/$membershipId': typeof AuthenticatedDashboardMembershipsMembershipIdRoute
+  '/_authenticated/_dashboard/permissions/$groupId': typeof AuthenticatedDashboardPermissionsGroupIdRoute
   '/_authenticated/_dashboard/users/$userId': typeof AuthenticatedDashboardUsersUserIdRoute
   '/_authenticated/_dashboard/vehicles/$vehiclesId': typeof AuthenticatedDashboardVehiclesVehiclesIdRouteWithChildren
   '/_authenticated/logs/create/$vehiclesId': typeof AuthenticatedLogsCreateVehiclesIdRoute
   '/_authenticated/_dashboard/memberships/': typeof AuthenticatedDashboardMembershipsIndexRoute
+  '/_authenticated/_dashboard/permissions/': typeof AuthenticatedDashboardPermissionsIndexRoute
   '/_authenticated/_dashboard/users/': typeof AuthenticatedDashboardUsersIndexRoute
   '/_authenticated/_dashboard/vehicles/': typeof AuthenticatedDashboardVehiclesIndexRoute
   '/_authenticated/_dashboard/vehicles/$vehiclesId/log/$logId': typeof AuthenticatedDashboardVehiclesVehiclesIdLogLogIdRoute
@@ -216,10 +236,12 @@ export interface FileRouteTypes {
     | '/logs/search-vehicle'
     | '/password-reset/$uid/$token'
     | '/memberships/$membershipId'
+    | '/permissions/$groupId'
     | '/users/$userId'
     | '/vehicles/$vehiclesId'
     | '/logs/create/$vehiclesId'
     | '/memberships/'
+    | '/permissions/'
     | '/users/'
     | '/vehicles/'
     | '/vehicles/$vehiclesId/log/$logId'
@@ -236,10 +258,12 @@ export interface FileRouteTypes {
     | '/logs/search-vehicle'
     | '/password-reset/$uid/$token'
     | '/memberships/$membershipId'
+    | '/permissions/$groupId'
     | '/users/$userId'
     | '/vehicles/$vehiclesId'
     | '/logs/create/$vehiclesId'
     | '/memberships'
+    | '/permissions'
     | '/users'
     | '/vehicles'
     | '/vehicles/$vehiclesId/log/$logId'
@@ -258,10 +282,12 @@ export interface FileRouteTypes {
     | '/password-reset/$uid/$token'
     | '/_authenticated/_dashboard/'
     | '/_authenticated/_dashboard/memberships/$membershipId'
+    | '/_authenticated/_dashboard/permissions/$groupId'
     | '/_authenticated/_dashboard/users/$userId'
     | '/_authenticated/_dashboard/vehicles/$vehiclesId'
     | '/_authenticated/logs/create/$vehiclesId'
     | '/_authenticated/_dashboard/memberships/'
+    | '/_authenticated/_dashboard/permissions/'
     | '/_authenticated/_dashboard/users/'
     | '/_authenticated/_dashboard/vehicles/'
     | '/_authenticated/_dashboard/vehicles/$vehiclesId/log/$logId'
@@ -378,6 +404,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardUsersIndexRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
+    '/_authenticated/_dashboard/permissions/': {
+      id: '/_authenticated/_dashboard/permissions/'
+      path: '/permissions'
+      fullPath: '/permissions/'
+      preLoaderRoute: typeof AuthenticatedDashboardPermissionsIndexRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
     '/_authenticated/_dashboard/memberships/': {
       id: '/_authenticated/_dashboard/memberships/'
       path: '/memberships'
@@ -404,6 +437,13 @@ declare module '@tanstack/react-router' {
       path: '/users/$userId'
       fullPath: '/users/$userId'
       preLoaderRoute: typeof AuthenticatedDashboardUsersUserIdRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/_dashboard/permissions/$groupId': {
+      id: '/_authenticated/_dashboard/permissions/$groupId'
+      path: '/permissions/$groupId'
+      fullPath: '/permissions/$groupId'
+      preLoaderRoute: typeof AuthenticatedDashboardPermissionsGroupIdRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
     '/_authenticated/_dashboard/memberships/$membershipId': {
@@ -441,9 +481,11 @@ const AuthenticatedDashboardVehiclesVehiclesIdRouteWithChildren =
 interface AuthenticatedDashboardRouteChildren {
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
   AuthenticatedDashboardMembershipsMembershipIdRoute: typeof AuthenticatedDashboardMembershipsMembershipIdRoute
+  AuthenticatedDashboardPermissionsGroupIdRoute: typeof AuthenticatedDashboardPermissionsGroupIdRoute
   AuthenticatedDashboardUsersUserIdRoute: typeof AuthenticatedDashboardUsersUserIdRoute
   AuthenticatedDashboardVehiclesVehiclesIdRoute: typeof AuthenticatedDashboardVehiclesVehiclesIdRouteWithChildren
   AuthenticatedDashboardMembershipsIndexRoute: typeof AuthenticatedDashboardMembershipsIndexRoute
+  AuthenticatedDashboardPermissionsIndexRoute: typeof AuthenticatedDashboardPermissionsIndexRoute
   AuthenticatedDashboardUsersIndexRoute: typeof AuthenticatedDashboardUsersIndexRoute
   AuthenticatedDashboardVehiclesIndexRoute: typeof AuthenticatedDashboardVehiclesIndexRoute
 }
@@ -453,12 +495,16 @@ const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
     AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
     AuthenticatedDashboardMembershipsMembershipIdRoute:
       AuthenticatedDashboardMembershipsMembershipIdRoute,
+    AuthenticatedDashboardPermissionsGroupIdRoute:
+      AuthenticatedDashboardPermissionsGroupIdRoute,
     AuthenticatedDashboardUsersUserIdRoute:
       AuthenticatedDashboardUsersUserIdRoute,
     AuthenticatedDashboardVehiclesVehiclesIdRoute:
       AuthenticatedDashboardVehiclesVehiclesIdRouteWithChildren,
     AuthenticatedDashboardMembershipsIndexRoute:
       AuthenticatedDashboardMembershipsIndexRoute,
+    AuthenticatedDashboardPermissionsIndexRoute:
+      AuthenticatedDashboardPermissionsIndexRoute,
     AuthenticatedDashboardUsersIndexRoute:
       AuthenticatedDashboardUsersIndexRoute,
     AuthenticatedDashboardVehiclesIndexRoute:
