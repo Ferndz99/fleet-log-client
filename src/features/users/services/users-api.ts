@@ -1,3 +1,4 @@
+import type { User } from "#/features/permissions/types/permissions";
 import type { PaginatedResponse } from "#/features/vehicles/types/vehicle";
 import axiosInstance from "#/lib/axios";
 import type {
@@ -36,7 +37,7 @@ export async function createInvitation(
 	return data;
 }
 
-export async function fetchUser(userId: number): Promise<UserDetail> {
+export async function fetchUser(userId: number): Promise<User> {
 	const { data } = await axiosInstance.get(`api/v1/users/${userId}/`);
 	return data;
 }

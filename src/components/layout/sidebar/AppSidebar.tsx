@@ -81,8 +81,8 @@ const data = {
 					url: "/memberships",
 				},
 				{
-					title: "Roles y Permisos",
-					url: "#",
+					title: "Permisos y Grupos",
+					url: "/permissions",
 				},
 			],
 		},
